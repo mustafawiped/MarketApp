@@ -32,7 +32,9 @@ class ItemActivity : AppCompatActivity() {
         kayitUfiyat = findViewById(R.id.kayitUfiyat)
         kayitUadet = findViewById(R.id.kayitUadet)
         kayitUskt = findViewById(R.id.kayitUskt)
+        selectedImage = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +57,17 @@ class ItemActivity : AppCompatActivity() {
         val forbiddenCharacters = listOf("@", "#", "$", "*", "%", ">", "<", "£")
         if (forbiddenCharacters.any { gelenUadi.contains(it) }) {
             Toast.makeText(this, "Ürün adı yasaklı karakterler içeriyor.", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        val control1 = gelenUfiyat.toIntOrNull()
+        val control2 = gelenUadet.toIntOrNull()
+        if (control1 == null || control2 == null) {
+            Toast.makeText(
+                this,
+                "Lütfen ürün fiyatını veya ürün adedini sayısal bir değer olarak girin.",
+                Toast.LENGTH_LONG
+            ).show()
             return
         }
 
@@ -139,17 +152,3 @@ class ItemActivity : AppCompatActivity() {
     }
 }
 
-
-
-
-/*
-var builder = AlertDialog.Builder(this@MainActivity)
-                builder.setTitle("HATA!")
-                builder.setMessage("Bir şeyler ters gitti. Lütfen internet bağlantını kontrol edip tekrar dene :)")
-                builder.setPositiveButton("TAMAM") {dialog, id->
-                    val comeback = Intent(this@MainActivity, MainActivity::class.java)
-                    startActivity(comeback)
-                }
-                builder.show()
-
- */
