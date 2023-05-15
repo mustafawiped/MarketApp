@@ -16,12 +16,11 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         private const val COLUMN_AMOUNT = "urunadedi"
         private const val COLUMN_IMAGE = "urunfotografi"
         private const val COLUMN_EXD = "urunskt"
-        private const val COLUMN_NOTE = "urunnotu"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableQuery =
-            "CREATE TABLE IF NOT EXISTS $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COLUMN_PRODUCT TEXT, $COLUMN_PRICE TEXT , $COLUMN_AMOUNT BYTE , $COLUMN_EXD TEXT , $COLUMN_NOTE TEXT , $COLUMN_IMAGE BLOB)"
+            "CREATE TABLE IF NOT EXISTS $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COLUMN_PRODUCT TEXT, $COLUMN_PRICE TEXT , $COLUMN_AMOUNT BYTE , $COLUMN_EXD TEXT , $COLUMN_IMAGE BLOB)"
         db?.execSQL(createTableQuery)
     }
 
@@ -38,7 +37,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         values.put(COLUMN_AMOUNT, amount)
         values.put(COLUMN_IMAGE, image)
         values.put(COLUMN_EXD, exd)
-        values.put(COLUMN_NOTE, note)
         val db = this.writableDatabase
         return db.insert(TABLE_NAME, null, values)
     }
@@ -50,7 +48,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         values.put(COLUMN_AMOUNT, amount)
         values.put(COLUMN_IMAGE, image)
         values.put(COLUMN_EXD, exd)
-        values.put(COLUMN_NOTE, note)
         val db = this.writableDatabase
         val whereClause = "$COLUMN_ID = ?"
         val whereArgs = arrayOf(id.toString())

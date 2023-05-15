@@ -21,13 +21,14 @@
         app:layout_constraintVertical_bias="0.164" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnFragmentItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="4dp"
         android:background="@drawable/button_background"
+        android:onClick="com.mustafagur.marketim.Fragments.ItemsFragment.urunEkle"
         android:text="Yeni Ürün Ekle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/_dynamic"
@@ -35,5 +36,5 @@
         app:layout_constraintStart_toStartOf="@+id/_dynamic"
         app:layout_constraintTop_toBottomOf="@+id/ItemsList"
         app:layout_constraintVertical_bias="0.4"
-        tools:ignore="UnknownId" />
+        tools:ignore="OnClick,UnknownId,UsingOnClickInXml" />
 </androidx.constraintlayout.widget.ConstraintLayout>
