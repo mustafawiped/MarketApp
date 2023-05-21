@@ -1,5 +1,6 @@
 package com.mustafagur.marketim.FragmentAdapters
 
+import DatabaseHelper
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.Cursor
@@ -33,6 +34,9 @@ class ItemsFragmentAdapter : Fragment() {
         btnFragmentItems.setOnClickListener {
             urunEkle(it)
         }
+        val dbHelper = DatabaseHelper(requireContext())
+        val cursor = dbHelper.getAllData()
+        updateList(cursor)
         return view
     }
 

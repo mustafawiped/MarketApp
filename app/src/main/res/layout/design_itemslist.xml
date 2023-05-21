@@ -4,19 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pink"
+    android:background="@drawable/image_background"
     tools:context="com.mustafagur.marketim.FragmentAdapters.SettingsFragmentAdapter" >
 
     <ImageView
         android:id="@+id/design_picture"
-        android:layout_width="140dp"
-        android:layout_height="116dp"
+        android:layout_width="109dp"
+        android:layout_height="82dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="7dp"
         android:layout_weight="1"
-        android:src="@drawable/logo" />
+        android:scaleType="fitXY"
+        android:clipToOutline="true"
+        android:src="@drawable/logo"
+        android:background="@drawable/image_background"/>
 
     <LinearLayout
         android:layout_width="197dp"
-        android:layout_height="119dp"
+        android:layout_height="87dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -27,26 +32,28 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:text="UrunAdi"
-            android:textColor="@color/white"
-            android:textSize="25dp" />
+            android:textColor="@color/pink"
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/design_itemskt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
             android:text="UrunSkt"
-            android:textColor="@color/white"
-            android:textSize="18dp" />
+            android:textColor="@color/pink"
+            android:textSize="13dp" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/design_itemcount"
         android:layout_width="wrap_content"
-        android:layout_height="116dp"
-        android:layout_weight="1"
-        android:textSize="20dp"
-        android:textColor="@color/white"
+        android:layout_height="76dp"
         android:layout_marginTop="10dp"
-        android:text="UrunAdet" />
+        android:layout_weight="1"
+        android:text="UrunAdet"
+        android:textAlignment="center"
+        android:textColor="@color/pink"
+        android:textSize="16dp" />
 </LinearLayout>

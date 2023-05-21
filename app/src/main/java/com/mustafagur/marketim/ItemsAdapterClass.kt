@@ -1,6 +1,8 @@
 package com.mustafagur.marketim
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
+import java.io.ByteArrayOutputStream
 
 class ItemsAdapterClass(private val list: ArrayList<DataClass>, private val context: Context) : BaseAdapter() {
     override fun getCount(): Int {
@@ -32,11 +36,24 @@ class ItemsAdapterClass(private val list: ArrayList<DataClass>, private val cont
         if (veri.urunFotografi != null) {
             val bitmap = BitmapFactory.decodeByteArray(veri.urunFotografi, 0, veri.urunFotografi!!.size)
             itemimg.setImageBitmap(bitmap)
-        } else
+            itemimg.setBackgroundResource(R.drawable.image_background)
+        } else {
             itemimg.setImageResource(R.drawable.logo)
+            itemimg.setBackgroundResource(R.drawable.image_background)
+        }
         itemname.text = veri.urunAdi
-        itemadet.text = veri.urunAdedi.toString()
-        itemskt.text = veri.urunSkt
+        itemadet.text = "Adet\n"+veri.urunAdedi.toString()
+        itemskt.text = "Skt: " + veri.urunSkt
+        view.setOnClickListener {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("urunid", veri.id)
+            intent.putExtra("urunadi", veri.urunAdi)
+            intent.putExtra("urunfiyati", veri.urunFiyati)
+            intent.putExtra("urunadedi", veri.urunAdedi)
+            intent.putExtra("urunskt", veri.urunSkt)
+            intent.putExtra("urunfotografi", veri.urunFotografi)
+            context.startActivity(intent)
+        }
         return view
     }
 }

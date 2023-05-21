@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
                 return
             }
         }
-        Toast.makeText(this, "ItemsFragmentAdapter bulunamadı", Toast.LENGTH_SHORT).show()
     }
 
 
