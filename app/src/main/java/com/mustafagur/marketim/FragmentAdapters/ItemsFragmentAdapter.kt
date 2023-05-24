@@ -37,6 +37,7 @@ class ItemsFragmentAdapter : Fragment() {
         val dbHelper = DatabaseHelper(requireContext())
         val cursor = dbHelper.getAllData()
         updateList(cursor)
+        dbHelper.close()
         return view
     }
 
@@ -60,6 +61,7 @@ class ItemsFragmentAdapter : Fragment() {
                 data.urunSkt = urunskt
                 itemList.add(data)
             } while (cursor.moveToNext())
+            cursor.close()
         }
         val adapterclass = ItemsAdapterClass(itemList, requireContext())
         adapterclass.notifyDataSetChanged()

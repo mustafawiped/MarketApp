@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,10 +50,11 @@ class ItemsAdapterClass(private val list: ArrayList<DataClass>, private val cont
             intent.putExtra("urunid", veri.id)
             intent.putExtra("urunadi", veri.urunAdi)
             intent.putExtra("urunfiyati", veri.urunFiyati)
-            intent.putExtra("urunadedi", veri.urunAdedi)
+            intent.putExtra("urunadedi", veri.urunAdedi.toString())
             intent.putExtra("urunskt", veri.urunSkt)
             intent.putExtra("urunfotografi", veri.urunFotografi)
             context.startActivity(intent)
+            Log.e("w","geliyo 1")
         }
         return view
     }

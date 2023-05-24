@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,6 +16,7 @@ import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import java.io.ByteArrayOutputStream
 import java.util.*
@@ -37,7 +39,6 @@ class ItemActivity : AppCompatActivity() {
         kayitUskt = findViewById(R.id.kayitUskt)
         selectedImage = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,21 +78,33 @@ class ItemActivity : AppCompatActivity() {
         val db = DatabaseHelper(this)
         val imageByteArray = convertBitmapToByteArray(selectedImage)
         db.insertData(gelenUadi, gelenUfiyat, gelenUadet.toByte(), imageByteArray, gelenUskt, "")
+        db.close()
         Toast.makeText(this, "Ürün başarıyla kaydedildi.", Toast.LENGTH_LONG).show()
+        val bb = Intent(this@ItemActivity,MainActivity::class.java)
+        startActivity(bb)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun fotografEkle(view: View) {
-        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.CAMERA), PERMISSION_REQUEST_CODE)
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+            checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ),
+                PERMISSION_REQUEST_CODE
+            )
         } else {
             showImageSourceDialog()
         }
     }
 
+
     private fun showImageSourceDialog() {
         val options = arrayOf<CharSequence>("Fotoğraf Çek", "Galeriden Seç", "İptal")
-        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this)
         builder.setTitle("Fotoğraf Kaynağını Seçin")
         builder.setItems(options) { dialog, item ->
             when (options[item]) {
@@ -129,7 +142,7 @@ class ItemActivity : AppCompatActivity() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 showImageSourceDialog()
             } else {
-                Toast.makeText(this, "Kamera izni reddedildi.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Depolama izni reddedildi.", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -140,14 +153,14 @@ class ItemActivity : AppCompatActivity() {
             when (requestCode) {
                 CAMERA_REQUEST_CODE -> {
                     val image = data?.extras?.get("data") as Bitmap
-                    selectedImage = image
+                    selectedImage = resizeImage(image)
                     Toast.makeText(this, "Fotoğraf başarıyla seçildi.", Toast.LENGTH_LONG).show()
                 }
                 GALLERY_REQUEST_CODE -> {
                     val selectedImageUri = data?.data
                     val imageStream = contentResolver.openInputStream(selectedImageUri!!)
                     val image = BitmapFactory.decodeStream(imageStream)
-                    selectedImage = image
+                    selectedImage = resizeImage(image)
                     Toast.makeText(this, "Fotoğraf başarıyla seçildi.", Toast.LENGTH_LONG).show()
                 }
             }
@@ -168,5 +181,19 @@ class ItemActivity : AppCompatActivity() {
         datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
         datePickerDialog.show()
     }
-}
 
+    private fun resizeImage(image: Bitmap): Bitmap {
+        val maxSize = 256
+        var width = image.width
+        var height = image.height
+        val scale: Float = when {
+            width > height -> maxSize.toFloat() / width.toFloat()
+            height > width -> maxSize.toFloat() / height.toFloat()
+            else -> maxSize.toFloat() / width.toFloat()
+        }
+        val matrix = Matrix()
+        matrix.postScale(scale, scale)
+        return Bitmap.createBitmap(image, 0, 0, width, height, matrix, true)
+    }
+
+}

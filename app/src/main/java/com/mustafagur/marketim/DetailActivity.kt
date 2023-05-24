@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -19,7 +20,7 @@ class DetailActivity : AppCompatActivity() {
     var urunid = 0
     var urunadi = ""
     var urunfiyati = 0.0
-    var urunadedi = 0
+    var urunadedi = ""
     var urunskt = ""
     var urunimg: ByteArray? = null
     private lateinit var detayUadi: TextView
@@ -43,8 +44,9 @@ class DetailActivity : AppCompatActivity() {
         urunid = intent.getIntExtra("urunid", 0)
         urunadi = intent.getStringExtra("urunadi").toString()
         urunfiyati = intent.getDoubleExtra("urunfiyati", 0.0)
-        urunadedi = intent.getByteExtra("urunadedi", 0).toInt()
+        urunadedi = intent.getStringExtra("urunadedi").toString()
         urunskt = intent.getStringExtra("urunskt").toString()
+        Log.e("w","geliyo 2")
         urunimg = intent.getByteArrayExtra("urunfotografi")
         detayUadi.setText("Ürün Adı = " + urunadi)
         detayUfiyat.setText("Ürün Fiyatı = "+ urunfiyati.toString())
@@ -52,8 +54,11 @@ class DetailActivity : AppCompatActivity() {
         detayUskt.setText("Son Kullanma Tarihi = " + urunskt)
         val bitmap = urunimg?.let { BitmapFactory.decodeByteArray(urunimg, 0, it.size) }
         if (bitmap != null) {
+            Log.e("w","geliyo 3")
             detayUimg.setImageBitmap(bitmap)
-        } else detayUimg.setImageResource(R.drawable.logo)
+        } else { detayUimg.setImageResource(R.drawable.logo)
+            Log.e("sa","geliyo 4")
+        }
     }
 
     fun urunuSil(view: View) {
@@ -63,6 +68,7 @@ class DetailActivity : AppCompatActivity() {
         builder.setPositiveButton("Evet") { dialog, which ->
             val db = DatabaseHelper(this)
             db.deleteData(urunid.toLong())
+            db.close()
             Toast.makeText(this,"Başarıyla Ürün Silindi!",Toast.LENGTH_LONG).show()
             val go = Intent(this@DetailActivity, MainActivity::class.java)
             startActivity(go)

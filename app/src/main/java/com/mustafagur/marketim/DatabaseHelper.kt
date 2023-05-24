@@ -41,7 +41,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return db.insert(TABLE_NAME, null, values)
     }
 
-    fun updateData(id: Long, product: String, price: String, amount: Byte, image: ByteArray, exd: String, note: String): Int {
+    fun updateData(id: Long, product: String, price: String, amount: Byte, image: ByteArray, exd: String): Int {
         val values = ContentValues()
         values.put(COLUMN_PRODUCT, product)
         values.put(COLUMN_PRICE, price)

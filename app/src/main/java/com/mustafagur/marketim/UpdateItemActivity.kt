@@ -6,10 +6,12 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.DatePicker
 import android.widget.EditText
@@ -32,7 +34,7 @@ class UpdateItemActivity : AppCompatActivity() {
     var urunid = 0
     var urunadi = ""
     var urunfiyati = 0.0
-    var urunadedi = 0
+    var urunadedi = ""
     var urunskt = ""
     var urunimg: ByteArray? = null
 
@@ -51,12 +53,12 @@ class UpdateItemActivity : AppCompatActivity() {
         urunid = intent.getIntExtra("urunid", 0)
         urunadi = intent.getStringExtra("urunadi").toString()
         urunfiyati = intent.getDoubleExtra("urunfiyati", 0.0)
-        urunadedi = intent.getByteExtra("urunadedi", 0).toInt()
+        urunadedi = intent.getStringExtra("urunadedi").toString()
         urunskt = intent.getStringExtra("urunskt").toString()
         urunimg = intent.getByteArrayExtra("urunfotografi")
         urunAdi.setText(urunadi)
         urunFiyat.setText(urunfiyati.toString())
-        urunAdet.setText(urunadedi.toString())
+        urunAdet.setText(urunadedi)
         urunSKT.setText(urunskt)
         val bitmap = urunimg?.let { BitmapFactory.decodeByteArray(urunimg, 0, it.size) }
         if (bitmap != null) {
@@ -108,26 +110,31 @@ class UpdateItemActivity : AppCompatActivity() {
     fun kaydetUrun(view: View) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Marketim | Bildiri")
-        builder.setMessage(""+urunadi+" isimli ürünü güncellemek istediğine emin misin?")
+        builder.setMessage("$urunadi isimli ürünü güncellemek istediğine emin misin?")
         builder.setPositiveButton("Evet") { dialog, which ->
-            val dbHelper = DatabaseHelper(this)
-            val product = urunAdi.text.toString()
-            val price = urunFiyat.text.toString()
-            val amount = urunAdet.text.toString().toByte()
-            val exd = urunSKT.text.toString()
-            val note = ""
-            val drawable = urunImg.drawable
-            val bitmap = (drawable as BitmapDrawable).bitmap
-            val stream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            val imageByteArray = stream.toByteArray()
-            val result = dbHelper.updateData(urunid.toLong(), product, price, amount, imageByteArray, exd, note)
-            if (result != -1)
-                Toast.makeText(this,"Başarıyla $urunadi isimli ürün güncellendi.",Toast.LENGTH_LONG).show()
-            else
-                Toast.makeText(this,"Bir hata oluştu, lütfen Geliştirici Ekibine bildirin.",Toast.LENGTH_LONG).show()
-            val go = Intent(this@UpdateItemActivity, MainActivity::class.java)
-            startActivity(go)
+            if (urunid == 0) {
+                Toast.makeText(this, "Hata oluştu. Hata Kodu: ERR2 | Lütfen Geliştirici Ekibine bildirin.", Toast.LENGTH_LONG).show()
+            } else {
+                val dbHelper = DatabaseHelper(this)
+                val product = urunAdi.text.toString()
+                val price = urunFiyat.text.toString()
+                val amount = urunAdet.text.toString().toByte()
+                val exd = urunSKT.text.toString()
+                val drawable = urunImg.drawable
+                val bitmap = (drawable as BitmapDrawable).bitmap
+                val resizedBitmap = resizeImage(bitmap)
+                val stream = ByteArrayOutputStream()
+                resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                val imageByteArray = stream.toByteArray()
+                val result = dbHelper.updateData(urunid.toLong(), product, price, amount, imageByteArray, exd)
+                if (result != -1)
+                    Toast.makeText(this, "Başarıyla $urunadi isimli ürün güncellendi.", Toast.LENGTH_LONG).show()
+                else
+                    Toast.makeText(this, "Bir hata oluştu, lütfen Geliştirici Ekibine bildirin.", Toast.LENGTH_LONG).show()
+                val go = Intent(this@UpdateItemActivity, MainActivity::class.java)
+                startActivity(go)
+                dbHelper.close()
+            }
         }
         builder.setNegativeButton("Hayır") { dialog, which -> }
         val alertDialog: AlertDialog = builder.create()
@@ -146,5 +153,19 @@ class UpdateItemActivity : AppCompatActivity() {
 
         datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
         datePickerDialog.show()
+    }
+
+    private fun resizeImage(image: Bitmap): Bitmap {
+        val maxSize = 256
+        var width = image.width
+        var height = image.height
+        val scale: Float = when {
+            width > height -> maxSize.toFloat() / width.toFloat()
+            height > width -> maxSize.toFloat() / height.toFloat()
+            else -> maxSize.toFloat() / width.toFloat()
+        }
+        val matrix = Matrix()
+        matrix.postScale(scale, scale)
+        return Bitmap.createBitmap(image, 0, 0, width, height, matrix, true)
     }
 }
