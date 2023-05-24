@@ -118,8 +118,19 @@ class UpdateItemActivity : AppCompatActivity() {
                 val dbHelper = DatabaseHelper(this)
                 val product = urunAdi.text.toString()
                 val price = urunFiyat.text.toString()
-                val amount = urunAdet.text.toString().toByte()
+                val amount = urunAdet.text.toString().toByteOrNull()
                 val exd = urunSKT.text.toString()
+
+                if (product.isEmpty() || price.isEmpty() || amount.toString().isEmpty() || exd.isEmpty()) {
+                    Toast.makeText(this@UpdateItemActivity, "Ürün adı, fiyatı, adedi veya skt 'sı boş olamaz.", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
+                if (amount == null) {
+                    Toast.makeText(this@UpdateItemActivity, "Ürün adedi en fazla 127 olabilir. Lütfen daha az adet miktarı girin.", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
                 val drawable = urunImg.drawable
                 val bitmap = (drawable as BitmapDrawable).bitmap
                 val resizedBitmap = resizeImage(bitmap)

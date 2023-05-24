@@ -1,18 +1,17 @@
 package com.mustafagur.marketim
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.BitmapFactory
-import android.util.Log
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import kotlin.collections.ArrayList
+import com.mustafagur.marketim.FragmentAdapters.DataClass2
 
-class ItemsAdapterClass(private val list: ArrayList<DataClass>, private val context: Context) : BaseAdapter() {
+class SktAdapterClass(private val list: ArrayList<DataClass2>, private val context: Context) : BaseAdapter() {
     override fun getCount(): Int {
         return list.size
     }
@@ -41,18 +40,11 @@ class ItemsAdapterClass(private val list: ArrayList<DataClass>, private val cont
             itemimg.setBackgroundResource(R.drawable.image_background)
         }
         itemname.text = veri.urunAdi
-        itemadet.text = "Adet\n"+veri.urunAdedi.toString()
-        itemskt.text = "Skt: " + veri.urunSkt
-        view.setOnClickListener {
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("urunid", veri.id)
-            intent.putExtra("urunadi", veri.urunAdi)
-            intent.putExtra("urunfiyati", veri.urunFiyati)
-            intent.putExtra("urunadedi", veri.urunAdedi.toString())
-            intent.putExtra("urunskt", veri.urunSkt)
-            intent.putExtra("urunfotografi", veri.urunFotografi)
-            context.startActivity(intent)
-        }
+        itemadet.text = "Kalan Gün\n"+veri.urunKalanGun
+        itemadet.setTextColor(Color.RED)
+        itemskt.text = "Son Kullanma Tarihi: " + veri.urunSkt
+        itemskt.setTextColor(Color.BLACK)
+        itemname.setTextColor(Color.BLACK)
         return view
     }
 }

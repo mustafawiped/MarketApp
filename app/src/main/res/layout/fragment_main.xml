@@ -98,8 +98,11 @@
             app:layout_constraintVertical_bias="0.041" />
 
         <ListView
-            android:layout_width="361dp"
+            android:id="@+id/sktyaklasanList"
+            android:layout_width="match_parent"
             android:layout_height="336dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

@@ -75,6 +75,12 @@ class ItemActivity : AppCompatActivity() {
             return
         }
 
+        var control3 = gelenUadet.toByteOrNull()
+        if (control3 == null) {
+            Toast.makeText(this@ItemActivity, "Bir ürünün en fazla 127 adedi tutulabilir.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val db = DatabaseHelper(this)
         val imageByteArray = convertBitmapToByteArray(selectedImage)
         db.insertData(gelenUadi, gelenUfiyat, gelenUadet.toByte(), imageByteArray, gelenUskt, "")
