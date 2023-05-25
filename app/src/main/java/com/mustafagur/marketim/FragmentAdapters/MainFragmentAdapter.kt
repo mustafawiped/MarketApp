@@ -64,9 +64,13 @@ class MainFragmentAdapter : Fragment() {
                     if (control != null && control <= 0) daysRemaining = "SKT Geçti"
                     val urunimg = cursor.getBlob(cursor.getColumnIndex("urunfotografi"))
                     val urunskt = cursor.getString(cursor.getColumnIndex("urunskt"))
+                    val urunfiyati = cursor.getString(cursor.getColumnIndex("urunfiyati"))
+                    val urunaded = cursor.getInt(cursor.getColumnIndex("urunadedi"))
                     val data = DataClass2()
                     data.id = id
                     data.urunAdi = productName
+                    data.urunFiyati = urunfiyati.toDouble()
+                    data.urunAdedi = urunaded
                     data.urunKalanGun = daysRemaining
                     data.urunSkt = urunskt
                     data.urunFotografi = urunimg

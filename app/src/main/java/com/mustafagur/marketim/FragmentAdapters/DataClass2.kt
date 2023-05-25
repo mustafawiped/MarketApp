@@ -19,6 +19,18 @@ class DataClass2 {
             field = value
         }
 
+    var urunFiyati: Double = 0.0
+        get() = field
+        set(value) {
+            field = value
+        }
+
+    var urunAdedi: Int = 0
+        get() = field
+        set(value) {
+            field = value
+        }
+
     var urunFotografi: ByteArray? = null
         get() = field
         set(value) {

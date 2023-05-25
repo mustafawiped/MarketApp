@@ -7,51 +7,10 @@
     android:background="#FF80B3"
     tools:context=".DetailActivity">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/button_background"
-        android:onClick="urunuSil"
-        android:text="Ürünü Sil"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/headerLayout"
-        app:layout_constraintHorizontal_bias="0.438"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detailUrunSKT"
-        app:layout_constraintVertical_bias="0.238"
-        tools:ignore="OnClick,UnknownId" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/button_background"
-        android:onClick="urunuGuncelle"
-        android:text="Ürünü Güncelle"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/headerLayout"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/detailUrunSKT"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.307"
-        tools:ignore="OnClick,UnknownId" />
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:background="#FF4081"
         android:orientation="vertical"
         android:padding="16dp"
@@ -62,98 +21,198 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
+
         <TextView
+            android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:fontFamily="@font/baumans"
             android:letterSpacing="0.2"
             android:text="Marketim"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="42dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="1dp"
+            android:background="@drawable/baseline_arrow_back_24"
+            android:onClick="backToMain"
+            app:layout_constraintBottom_toBottomOf="@+id/textView14"
+            app:layout_constraintEnd_toStartOf="@+id/textView14"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView14"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="170dp"
+        android:layout_height="72dp"
+        android:background="@drawable/button_background"
+        android:onClick="urunuGuncelle"
+        android:text="Ürünü Güncelle"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintVertical_bias="0.289"
+        tools:ignore="OnClick,UnknownId" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="170dp"
+        android:layout_height="72dp"
+        android:background="@drawable/button_background"
+        android:onClick="urunuSil"
+        android:text="Ürünü Sil"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintVertical_bias="0.289"
+        tools:ignore="OnClick,UnknownId" />
 
     <ImageView
         android:id="@+id/detailLogo"
         android:layout_width="257dp"
         android:layout_height="216dp"
-        android:scaleType="fitXY"
-        android:clipToOutline="true"
-        android:src="@drawable/logo"
         android:background="@drawable/image_background"
+        android:clipToOutline="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerLayout"
-        app:layout_constraintVertical_bias="0.036" />
+        app:layout_constraintVertical_bias="0.032" />
 
-    <TextView
-        android:id="@+id/detailUrunAdi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/baumans"
-        android:text="Ürün Adı: UrunAdi"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="24sp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="326dp"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px"
+        android:background="@drawable/layout_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toStartOf="@+id/headerLayout"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detailLogo"
-        app:layout_constraintVertical_bias="0.103" />
+        app:layout_constraintVertical_bias="0.125">
+
+        <TextView
+            android:id="@+id/detailUrunAdi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baumans"
+            android:text="Ürün Adı: UrunAdi"
+            android:textAlignment="center"
+            android:textColor="@color/pink"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.073"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.087" />
+
+        <TextView
+            android:id="@+id/detailUrunSKT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/baumans"
+            android:text="Ürün SKT Kalan Zamanı:"
+            android:textAlignment="center"
+            android:textColor="@color/pink"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/detailUrunAdedi"
+            app:layout_constraintTop_toBottomOf="@+id/detailUrunAdedi"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/detailUrunFiyati"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/baumans"
+            android:text="Ürün Fiyatı: UrunFiyati"
+            android:textAlignment="center"
+            android:textColor="@color/pink"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/detailUrunAdi"
+            app:layout_constraintTop_toBottomOf="@+id/detailUrunAdi"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/detailUrunKalanZ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/baumans"
+            android:text="Kullanılabilirlik Süresi: Sure"
+            android:textAlignment="center"
+            android:textColor="@color/pink"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/detailUrunSKT"
+            app:layout_constraintTop_toBottomOf="@+id/detailUrunSKT"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/detailUrunAdedi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/baumans"
+            android:text="Ürün Adedi: UrunAdedi"
+            android:textAlignment="center"
+            android:textColor="@color/pink"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/detailUrunFiyati"
+            app:layout_constraintTop_toBottomOf="@+id/detailUrunFiyati"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/detailUrunFiyati"
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/baumans"
-        android:text="Ürün Fiyatı: UrunFiyati"
+        android:letterSpacing=".7"
+        android:text="MARKETIM APP SINCE 2023"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/detailUrunAdi"
-        app:layout_constraintTop_toBottomOf="@+id/detailUrunAdi"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerLayout"
+        app:layout_constraintVertical_bias="0.976" />
 
-    <TextView
-        android:id="@+id/detailUrunAdedi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/baumans"
-        android:text="Ürün Adedi: UrunAdedi"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/detailUrunFiyati"
-        app:layout_constraintTop_toBottomOf="@+id/detailUrunFiyati"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/detailUrunSKT"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/baumans"
-        android:text="Son Kullanma Tarihi: 08/03/2023"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/detailUrunFiyati"
-        app:layout_constraintTop_toBottomOf="@+id/detailUrunAdedi"
-        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

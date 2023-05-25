@@ -14,6 +14,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.DatePicker
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -26,6 +27,7 @@ class ItemActivity : AppCompatActivity() {
     private lateinit var kayitUfiyat: EditText
     private lateinit var kayitUadet: EditText
     private lateinit var kayitUskt: EditText
+    private lateinit var kayitUresim: ImageView
     private lateinit var selectedImage: Bitmap
 
     private val PERMISSION_REQUEST_CODE = 1
@@ -37,6 +39,7 @@ class ItemActivity : AppCompatActivity() {
         kayitUfiyat = findViewById(R.id.kayitUfiyat)
         kayitUadet = findViewById(R.id.kayitUadet)
         kayitUskt = findViewById(R.id.kayitUskt)
+        kayitUresim = findViewById(R.id.kayitUlogo)
         selectedImage = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
     }
 
@@ -160,14 +163,14 @@ class ItemActivity : AppCompatActivity() {
                 CAMERA_REQUEST_CODE -> {
                     val image = data?.extras?.get("data") as Bitmap
                     selectedImage = resizeImage(image)
-                    Toast.makeText(this, "Fotoğraf başarıyla seçildi.", Toast.LENGTH_LONG).show()
+                    kayitUresim.setImageBitmap(selectedImage)
                 }
                 GALLERY_REQUEST_CODE -> {
                     val selectedImageUri = data?.data
                     val imageStream = contentResolver.openInputStream(selectedImageUri!!)
                     val image = BitmapFactory.decodeStream(imageStream)
                     selectedImage = resizeImage(image)
-                    Toast.makeText(this, "Fotoğraf başarıyla seçildi.", Toast.LENGTH_LONG).show()
+                    kayitUresim.setImageBitmap(selectedImage)
                 }
             }
         }
@@ -201,5 +204,11 @@ class ItemActivity : AppCompatActivity() {
         matrix.postScale(scale, scale)
         return Bitmap.createBitmap(image, 0, 0, width, height, matrix, true)
     }
+    fun backToMain(view: View) {
+        finish()
+    }
 
+    fun resmiKaldir(view: View) {
+        kayitUresim.setImageResource(R.drawable.logo)
+    }
 }

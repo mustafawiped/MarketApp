@@ -2,19 +2,17 @@ package com.mustafagur.marketim
 
 import DatabaseHelper
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DetailActivity : AppCompatActivity() {
     var urunid = 0
@@ -27,6 +25,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var detayUfiyat: TextView
     private lateinit var detayUadet: TextView
     private lateinit var detayUskt: TextView
+    private lateinit var detayUkz: TextView
     private lateinit var detayUimg: ImageView
 
     private fun init() {
@@ -34,6 +33,7 @@ class DetailActivity : AppCompatActivity() {
         detayUfiyat = findViewById(R.id.detailUrunFiyati)
         detayUadet = findViewById(R.id.detailUrunAdedi)
         detayUskt = findViewById(R.id.detailUrunSKT)
+        detayUkz = findViewById(R.id.detailUrunKalanZ)
         detayUimg = findViewById(R.id.detailLogo)
     }
 
@@ -46,12 +46,16 @@ class DetailActivity : AppCompatActivity() {
         urunfiyati = intent.getDoubleExtra("urunfiyati", 0.0)
         urunadedi = intent.getStringExtra("urunadedi").toString()
         urunskt = intent.getStringExtra("urunskt").toString()
-        Log.e("w","geliyo 2")
+        val currentDate = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val expiryDate = dateFormat.parse(urunskt)
+        var daysRemaining = ((expiryDate.time - currentDate.time) / (24L * 60L * 60L * 1000L)).toString()
         urunimg = intent.getByteArrayExtra("urunfotografi")
-        detayUadi.setText("Ürün Adı = " + urunadi)
-        detayUfiyat.setText("Ürün Fiyatı = "+ urunfiyati.toString())
-        detayUadet.setText("Ürün Adedi = " + urunadedi.toString())
-        detayUskt.setText("Son Kullanma Tarihi = " + urunskt)
+        detayUadi.setText("Ürün Adı: $urunadi")
+        detayUfiyat.setText("Ürün Fiyatı: ${urunfiyati.toString()}")
+        detayUadet.setText("Ürün Adedi: "+ urunadedi.toString())
+        detayUkz.setText("Kullanılabilirlik Süresi: $daysRemaining Gün")
+        detayUskt.setText("Ürün SKT: $urunskt")
         val bitmap = urunimg?.let { BitmapFactory.decodeByteArray(urunimg, 0, it.size) }
         if (bitmap != null) {
             Log.e("w","geliyo 3")
@@ -87,5 +91,9 @@ class DetailActivity : AppCompatActivity() {
         intent.putExtra("urunskt", urunskt)
         intent.putExtra("urunfotografi", urunimg)
         startActivity(intent)
+    }
+
+    fun backToMain(view: View) {
+        finish()
     }
 }

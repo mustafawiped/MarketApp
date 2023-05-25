@@ -1,6 +1,7 @@
 package com.mustafagur.marketim
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -45,6 +46,16 @@ class SktAdapterClass(private val list: ArrayList<DataClass2>, private val conte
         itemskt.text = "Son Kullanma Tarihi: " + veri.urunSkt
         itemskt.setTextColor(Color.BLACK)
         itemname.setTextColor(Color.BLACK)
+        view.setOnClickListener {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("urunid", veri.id)
+            intent.putExtra("urunadi", veri.urunAdi)
+            intent.putExtra("urunfiyati", veri.urunFiyati)
+            intent.putExtra("urunadedi", veri.urunAdedi.toString())
+            intent.putExtra("urunskt", veri.urunSkt)
+            intent.putExtra("urunfotografi", veri.urunFotografi)
+            context.startActivity(intent)
+        }
         return view
     }
 }

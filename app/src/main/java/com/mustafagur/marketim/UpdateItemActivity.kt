@@ -11,7 +11,6 @@ import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.DatePicker
 import android.widget.EditText
@@ -19,7 +18,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import com.mustafagur.marketim.R
 import java.io.ByteArrayOutputStream
 import java.util.*
 
@@ -39,11 +37,11 @@ class UpdateItemActivity : AppCompatActivity() {
     var urunimg: ByteArray? = null
 
     private fun init() {
-        urunAdi = findViewById(R.id.updateUrunAdi)
-        urunFiyat = findViewById(R.id.updateUrunFiyati)
-        urunAdet = findViewById(R.id.updateUrunAdedi)
-        urunSKT = findViewById(R.id.updateUrunSKT)
-        urunImg = findViewById(R.id.updateLogo)
+        urunAdi = findViewById(R.id.kayitUadi)
+        urunFiyat = findViewById(R.id.kayitUfiyat)
+        urunAdet = findViewById(R.id.kayitUadet)
+        urunSKT = findViewById(R.id.kayitUskt)
+        urunImg = findViewById(R.id.kayitUlogo)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -178,5 +176,8 @@ class UpdateItemActivity : AppCompatActivity() {
         val matrix = Matrix()
         matrix.postScale(scale, scale)
         return Bitmap.createBitmap(image, 0, 0, width, height, matrix, true)
+    }
+    fun backToMain(view: View) {
+        finish()
     }
 }

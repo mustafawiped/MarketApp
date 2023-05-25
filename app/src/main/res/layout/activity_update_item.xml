@@ -16,18 +16,18 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/button_background"
         android:onClick="kaydetUrun"
-        android:text="ÜRÜNÜ KAYDET"
+        android:text="ÜRÜNÜ GÜNCELLE"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/updateUrunSKT"
+        app:layout_constraintEnd_toEndOf="@+id/kayitUskt"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/updateUrunSKT"
-        app:layout_constraintTop_toBottomOf="@+id/updateUrunSKT"
+        app:layout_constraintStart_toStartOf="@+id/kayitUskt"
+        app:layout_constraintTop_toBottomOf="@+id/kayitUskt"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="UnknownId" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/updateUrunSKT"
+        android:id="@+id/kayitUskt"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_marginLeft="10dp"
@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView19"
-        app:layout_constraintTop_toBottomOf="@+id/updateUrunAdedi"
+        app:layout_constraintTop_toBottomOf="@+id/kayitUadet"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -76,7 +76,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/updateUrunFiyati"
+        app:layout_constraintTop_toBottomOf="@+id/kayitUfiyat"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -92,11 +92,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView15"
-        app:layout_constraintTop_toBottomOf="@+id/updateUrunAdi"
+        app:layout_constraintTop_toBottomOf="@+id/kayitUadi"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/updateUrunAdi"
+        android:id="@+id/kayitUadi"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_marginBottom="156dp"
@@ -117,7 +117,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/updateUrunFiyati"
+        android:id="@+id/kayitUfiyat"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_marginLeft="10dp"
@@ -138,7 +138,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/updateUrunAdedi"
+        android:id="@+id/kayitUadet"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:background="@drawable/edittext_background"
@@ -169,7 +169,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.053"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateLogo"
+        app:layout_constraintTop_toBottomOf="@+id/kayitUlogo"
         app:layout_constraintVertical_bias="0.05" />
 
     <Button
@@ -184,7 +184,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toEndOf="@+id/updateLogo"
+        app:layout_constraintStart_toEndOf="@+id/kayitUlogo"
         app:layout_constraintTop_toBottomOf="@+id/headerLayout"
         app:layout_constraintVertical_bias="0.064"
         tools:ignore="OnClick,UnknownId" />
@@ -208,7 +208,7 @@
         tools:ignore="OnClick,UnknownId" />
 
     <ImageView
-        android:id="@+id/updateLogo"
+        android:id="@+id/kayitUlogo"
         android:layout_width="176dp"
         android:layout_height="143dp"
         android:background="@drawable/image_background"
@@ -222,13 +222,10 @@
         app:layout_constraintTop_toBottomOf="@+id/headerLayout"
         app:layout_constraintVertical_bias="0.05" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:background="#FF4081"
         android:orientation="vertical"
         android:padding="16dp"
@@ -239,17 +236,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
+
         <TextView
+            android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:fontFamily="@font/baumans"
             android:letterSpacing="0.2"
             android:text="Marketim"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="42dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="1dp"
+            android:onClick="backToMain"
+            android:background="@drawable/baseline_arrow_back_24"
+            app:layout_constraintBottom_toBottomOf="@+id/textView14"
+            app:layout_constraintEnd_toStartOf="@+id/textView14"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView14"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
