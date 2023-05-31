@@ -17,7 +17,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintHorizontal_bias="0.059"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025" />
@@ -51,11 +51,9 @@
             app:layout_constraintVertical_bias="0.131" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="66dp"
-            android:layout_marginRight="30px"
+            android:layout_width="361dp"
+            android:layout_height="68dp"
             android:orientation="vertical"
-            android:layout_marginLeft="30px"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -67,8 +65,9 @@
                 android:id="@+id/infoLbl"
                 android:layout_width="357dp"
                 android:layout_height="47dp"
+                android:textSize="15dp"
                 android:layout_marginRight="10px"
-                android:text="Bildirim Yok"
+                android:text="Günlük bilgi mesajı burada yazacaktır."
                 android:textColor="@color/gray" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -104,7 +103,7 @@
         <ListView
             android:id="@+id/sktyaklasanList"
             android:layout_width="match_parent"
-            android:layout_height="336dp"
+            android:layout_height="386dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
