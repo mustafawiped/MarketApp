@@ -5,10 +5,13 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import com.mustafagur.marketim.DataClass
@@ -37,6 +40,21 @@ class ItemsFragmentAdapter : Fragment() {
         val cursor = dbHelper.getAllData()
         updateList(cursor)
         dbHelper.close()
+        val search: EditText = view.findViewById(R.id.searchTxt)
+        search.setOnEditorActionListener { _, actionId, _ ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    val searchText = search.text.toString()
+                    val dbHelper = DatabaseHelper(requireContext())
+                    val cursor = dbHelper.searchData(searchText)
+                    updateList(cursor)
+                    dbHelper.close()
+                    true
+                }
+                else -> false
+            }
+        }
+
         return view
     }
 
@@ -65,6 +83,16 @@ class ItemsFragmentAdapter : Fragment() {
         val adapterclass = ItemsAdapterClass(itemList, requireContext())
         adapterclass.notifyDataSetChanged()
         listView.adapter = adapterclass
+    }
+
+    public fun ItemSearch(view: View, actionId: Int, event: KeyEvent?): Boolean {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_NULL) {
+            val editTextSearch = view as EditText
+            val searchText = editTextSearch.text.toString()
+
+            return true
+        }
+        return false
     }
 
     private fun urunEkle(view: View) {

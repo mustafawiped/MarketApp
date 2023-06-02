@@ -5,6 +5,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -17,26 +18,25 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import java.text.SimpleDateFormat
 import java.util.*
-import android.content.Context as Context1
 
 class NotificationsClass : BroadcastReceiver() {
 
     companion object {
         const val CHANNEL_ID = "MarketimChannelID"
-        const val CHANNEL_NAME = "MarketimNotifications"
+        const val CHANNEL_NAME = "SKT Bildirimi"
     }
 
-    override fun onReceive(context: Context1, intent: Intent) {
+    override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             scheduleNotification(context)
         }
     }
 
-    private fun scheduleNotification(context: Context1) {
+    private fun scheduleNotification(context: Context) {
         val intent = Intent(context, NotificationsClass::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-        val alarmManager = context.getSystemService(Context1.ALARM_SERVICE) as AlarmManager
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
 
         val calendar = Calendar.getInstance()
@@ -62,8 +62,8 @@ class NotificationsClass : BroadcastReceiver() {
     private fun getSelectedTime(calendar: Calendar): Long {
         val selectedCalendar = calendar.clone() as Calendar
 
-        selectedCalendar.set(Calendar.HOUR_OF_DAY, 19)
-        selectedCalendar.set(Calendar.MINUTE, 35)
+        selectedCalendar.set(Calendar.HOUR_OF_DAY, 20)
+        selectedCalendar.set(Calendar.MINUTE, 30)
         selectedCalendar.set(Calendar.SECOND, 0)
 
         val currentTime = Calendar.getInstance().timeInMillis
@@ -75,7 +75,7 @@ class NotificationsClass : BroadcastReceiver() {
         return selectedCalendar.timeInMillis
     }
 
-    private fun createNotificationChannel(context: Context1) {
+    private fun createNotificationChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
@@ -87,13 +87,13 @@ class NotificationsClass : BroadcastReceiver() {
             channel.enableVibration(true)
             channel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
             val notificationManager =
-                context.getSystemService(Context1.NOTIFICATION_SERVICE) as NotificationManager
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
 
     @SuppressLint("Range")
-    private fun sendNotification(context: Context1) {
+    private fun sendNotification(context: Context) {
         val database = DatabaseHelper(context)
         val cursor = database.getAllData()
         if (cursor != null) {
@@ -104,17 +104,20 @@ class NotificationsClass : BroadcastReceiver() {
                 val expiryDate = dateFormat.parse(expiryDateString)
                 if (expiryDate != null && expiryDate.time - currentDate.time < 30L * 24L * 60L * 60L * 1000L) {
                     val urunadi = cursor.getString(cursor.getColumnIndex("urunadi"))
-                    val daysRemaining = ((expiryDate.time - currentDate.time) / (24L * 60L * 60L * 1000L)).toString()
-                    val notificationText = "Selamlar! $urunadi isimli ürününün son kullanma tarihine $daysRemaining Gün kaldı."
+                    val daysRemaining =
+                        ((expiryDate.time - currentDate.time) / (24L * 60L * 60L * 1000L)).toString()
+                    val notificationText =
+                        "Selamlar! $urunadi isimli ürününün son kullanma tarihine $daysRemaining Gün kaldı."
                     val notificationTitle = "$urunadi'ın SKT'i Yaklaştı!"
                     val notificationIcon = R.drawable.logo
                     val notificationIntent = Intent(context, MainActivity::class.java)
-                    notificationIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    notificationIntent.flags =
+                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     val pendingIntent = PendingIntent.getActivity(
                         context,
                         0,
                         notificationIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                     )
                     val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
                         .setSmallIcon(notificationIcon)
@@ -125,7 +128,11 @@ class NotificationsClass : BroadcastReceiver() {
                         .setAutoCancel(true)
 
                     val notificationManager = NotificationManagerCompat.from(context)
-                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.ACCESS_NOTIFICATION_POLICY
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
                         return
                     }
                     notificationManager.notify(0, notificationBuilder.build())

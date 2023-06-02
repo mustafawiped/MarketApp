@@ -10,15 +10,17 @@
     <ListView
         android:id="@+id/ItemsList"
         android:layout_width="match_parent"
-        android:layout_height="573dp"
+        android:layout_height="513dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/layout_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.164" />
+        app:layout_constraintTop_toBottomOf="@+id/searchTxt"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnFragmentItems"
@@ -37,4 +39,26 @@
         app:layout_constraintTop_toBottomOf="@+id/ItemsList"
         app:layout_constraintVertical_bias="0.4"
         tools:ignore="OnClick,UnknownId,UsingOnClickInXml" />
+
+    <EditText
+        android:id="@+id/searchTxt"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/layout_background"
+        android:drawableStart="@drawable/search"
+        android:ems="10"
+        android:hint="Ara.."
+        android:textColor="@color/black"
+        android:imeOptions="actionSearch"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp"
+        android:textColorHint="@color/gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.026" />
 </androidx.constraintlayout.widget.ConstraintLayout>

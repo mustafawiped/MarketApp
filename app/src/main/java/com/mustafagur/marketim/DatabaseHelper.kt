@@ -30,6 +30,12 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         onCreate(db)
     }
 
+    fun searchData(keyword: String): Cursor? {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_PRODUCT LIKE '%$keyword%'"
+        return db.rawQuery(query, null)
+    }
+
     fun insertData(product: String, price: String, amount: Byte, image: ByteArray, exd: String, note: String): Long {
         val values = ContentValues()
         values.put(COLUMN_PRODUCT, product)
