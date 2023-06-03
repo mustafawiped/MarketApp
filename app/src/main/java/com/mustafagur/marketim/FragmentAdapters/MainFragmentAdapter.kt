@@ -51,38 +51,38 @@ class MainFragmentAdapter : Fragment() {
 
     @SuppressLint("Range")
     private fun sktyaklasanlar() {
-        val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val mevcutTRH = Calendar.getInstance().time
+        val TRHformat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val cursor: Cursor? = dbHelper.getAllData()
-        val tempList = ArrayList<DataClass2>() 
+        val geciciList = ArrayList<DataClass2>()
         cursor?.let {
             while (cursor.moveToNext()) {
-                val expiryDateString = cursor.getString(cursor.getColumnIndex("urunskt"))
-                val expiryDate = dateFormat.parse(expiryDateString)
-                if (expiryDate != null && expiryDate.time - currentDate.time < 90L * 24L * 60L * 60L * 1000L) {
-                    val productName = cursor.getString(cursor.getColumnIndex("urunadi"))
+                val sktString = cursor.getString(cursor.getColumnIndex("urunskt"))
+                val sonKtarihi = TRHformat.parse(sktString)
+                if (sonKtarihi != null && sonKtarihi.time - mevcutTRH.time < 90L * 24L * 60L * 60L * 1000L) {
+                    val uadi = cursor.getString(cursor.getColumnIndex("urunadi"))
                     val id = cursor.getInt(cursor.getColumnIndex("id"))
-                    var daysRemaining = ((expiryDate.time - currentDate.time) / (24L * 60L * 60L * 1000L)).toString()
-                    var control = daysRemaining.toIntOrNull()
-                    if (control != null && control <= 0) daysRemaining = "SKT Geçti"
+                    var kalanGun = ((sonKtarihi.time - mevcutTRH.time) / (24L * 60L * 60L * 1000L)).toString()
+                    var control = kalanGun.toIntOrNull()
+                    if (control != null && control <= 0) kalanGun = "SKT Geçti"
                     val urunimg = cursor.getBlob(cursor.getColumnIndex("urunfotografi"))
                     val urunskt = cursor.getString(cursor.getColumnIndex("urunskt"))
                     val urunfiyati = cursor.getString(cursor.getColumnIndex("urunfiyati"))
                     val urunaded = cursor.getInt(cursor.getColumnIndex("urunadedi"))
                     val data = DataClass2()
                     data.id = id
-                    data.urunAdi = productName
+                    data.urunAdi = uadi
                     data.urunFiyati = urunfiyati.toDouble()
                     data.urunAdedi = urunaded
-                    data.urunKalanGun = daysRemaining
+                    data.urunKalanGun = kalanGun
                     data.urunSkt = urunskt
                     data.urunFotografi = urunimg
-                    tempList.add(data)
+                    geciciList.add(data)
                 }
             }
             cursor.close()
-            val sortedList = tempList.sortedBy { it.urunKalanGun.toDouble() }
-            val adapterclass = SktAdapterClass(sortedList.toList() as ArrayList<DataClass2>, requireContext())
+            val sortedList = geciciList.sortedBy { it.urunKalanGun.toDouble() }
+            val adapterclass = SktAdapterClass(sortedList.toMutableList() as ArrayList<DataClass2>, requireContext())
             adapterclass.notifyDataSetChanged()
             listView.adapter = adapterclass
         }

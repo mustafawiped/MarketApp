@@ -2,4 +2,26 @@
     <string name="app_name">Marketim</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string-array name="spinner_values">
+        <item>Tüm Harcamaları Göster</item>
+        <item>Son 30 Günün Harcamaları</item>
+        <item>Ocak Ayı Harcamaları</item>
+        <item>Şubat Ayı Harcamaları</item>
+        <item>Mart Ayı Harcamaları</item>
+        <item>Nisan Ayı Harcamaları</item>
+        <item>Mayıs Ayı Harcamaları</item>
+        <item>Haziran Ayı Harcamaları</item>
+        <item>Temmuz Ayı Harcamaları</item>
+        <item>Ağustos Ayı Harcamaları</item>
+        <item>Eylül Ayı Harcamaları</item>
+        <item>Ekim Ayı Harcamaları</item>
+        <item>Kasım Ayı Harcamaları</item>
+        <item>Aralık Ayı Harcamaları</item>
+    </string-array>
+    <string-array name="spinner2_values">
+        <item>En Yüksek Fiyata Göre Sırala</item>
+        <item>En Düşük Fiyata Göre Sırala</item>
+        <item>En Yakın Tarihe Göre Sırala</item>
+        <item>En Geç Tarihe Göre Sırala</item>
+    </string-array>
 </resources>

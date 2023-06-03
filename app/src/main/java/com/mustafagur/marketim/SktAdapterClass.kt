@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,15 @@ class SktAdapterClass(private val list: ArrayList<DataClass2>, private val conte
         } else {
             itemimg.setImageResource(R.drawable.logo)
             itemimg.setBackgroundResource(R.drawable.image_background)
+        }
+        if(veri.urunAdi.length > 11 ) {
+            val textSizeInDp = 15f
+            val textSizeInPx = (textSizeInDp * context.resources.displayMetrics.density + 0.5f).toInt()
+            itemname.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeInPx.toFloat())
+        } else {
+            val textSizeInDp = 20f
+            val textSizeInPx = (textSizeInDp * context.resources.displayMetrics.density + 0.5f).toInt()
+            itemname.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeInPx.toFloat())
         }
         itemname.text = veri.urunAdi
         itemadet.text = "Kalan Gün\n"+veri.urunKalanGun

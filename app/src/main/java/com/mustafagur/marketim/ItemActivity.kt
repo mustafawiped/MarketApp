@@ -85,6 +85,11 @@ class ItemActivity : AppCompatActivity() {
             return
         }
 
+        if(gelenUadi.length >= 20) {
+            Toast.makeText(this@ItemActivity,"Ürün Adı 20 karakter veya daha fazla olamaz.",Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val bugununTarihi = format.format(Date())
 

@@ -129,6 +129,11 @@ class UpdateItemActivity : AppCompatActivity() {
                     return@setPositiveButton
                 }
 
+                if(product.length >= 20) {
+                    Toast.makeText(this@UpdateItemActivity,"Ürün Adı 20 karakter veya daha fazla olamaz.",Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
                 val drawable = urunImg.drawable
                 val bitmap = (drawable as BitmapDrawable).bitmap
                 val resizedBitmap = resizeImage(bitmap)
