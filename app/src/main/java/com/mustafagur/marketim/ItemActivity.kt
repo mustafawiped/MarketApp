@@ -20,6 +20,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ItemActivity : AppCompatActivity() {
@@ -84,9 +85,12 @@ class ItemActivity : AppCompatActivity() {
             return
         }
 
+        val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val bugununTarihi = format.format(Date())
+
         val db = DatabaseHelper(this)
         val imageByteArray = convertBitmapToByteArray(selectedImage)
-        db.insertData(gelenUadi, gelenUfiyat, gelenUadet.toByte(), imageByteArray, gelenUskt, "")
+        db.insertData(gelenUadi, gelenUfiyat, gelenUadet.toByte(), imageByteArray, gelenUskt, bugununTarihi)
         db.close()
         Toast.makeText(this, "Ürün başarıyla kaydedildi.", Toast.LENGTH_LONG).show()
         val bb = Intent(this@ItemActivity,MainActivity::class.java)

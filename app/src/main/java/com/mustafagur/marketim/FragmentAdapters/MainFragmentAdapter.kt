@@ -10,14 +10,11 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
-import com.mustafagur.marketim.ItemsAdapterClass
 import com.mustafagur.marketim.R
 import com.mustafagur.marketim.SktAdapterClass
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.random.Random
+import kotlin.collections.ArrayList
 
 class MainFragmentAdapter : Fragment() {
 
@@ -26,7 +23,7 @@ class MainFragmentAdapter : Fragment() {
     private lateinit var listView: ListView
     private lateinit var gunlukBilgi: TextView
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "Range")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,7 +54,7 @@ class MainFragmentAdapter : Fragment() {
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val cursor: Cursor? = dbHelper.getAllData()
-        list.clear()
+        val tempList = ArrayList<DataClass2>() 
         cursor?.let {
             while (cursor.moveToNext()) {
                 val expiryDateString = cursor.getString(cursor.getColumnIndex("urunskt"))
@@ -80,11 +77,12 @@ class MainFragmentAdapter : Fragment() {
                     data.urunKalanGun = daysRemaining
                     data.urunSkt = urunskt
                     data.urunFotografi = urunimg
-                    list.add(data)
+                    tempList.add(data)
                 }
             }
             cursor.close()
-            val adapterclass = SktAdapterClass(list, requireContext())
+            val sortedList = tempList.sortedBy { it.urunKalanGun.toDouble() }
+            val adapterclass = SktAdapterClass(sortedList.toList() as ArrayList<DataClass2>, requireContext())
             adapterclass.notifyDataSetChanged()
             listView.adapter = adapterclass
         }

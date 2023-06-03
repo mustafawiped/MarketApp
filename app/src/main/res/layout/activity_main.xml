@@ -64,10 +64,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Ayarlar"
-            android:textSize="18sp"
+            android:gravity="center"
+            android:text="Harcamalar"
             android:textColor="#000000"
-            android:gravity="center"/>
+            android:textSize="18sp" />
 
     </LinearLayout>
 

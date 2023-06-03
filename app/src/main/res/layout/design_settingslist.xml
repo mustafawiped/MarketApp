@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/image_background" >
+
+    <ImageView
+        android:id="@+id/design2_resim"
+        android:layout_width="109dp"
+        android:layout_height="82dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="7dp"
+        android:layout_weight="1"
+        android:scaleType="fitXY"
+        android:clipToOutline="true"
+        android:src="@drawable/logo"
+        android:background="@drawable/image_background"/>
+
+    <LinearLayout
+        android:layout_width="282dp"
+        android:layout_height="88dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/design2_urunadi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="UrunAdi"
+            android:textColor="@color/pink"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/design2_urundetay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="Harcanan Tutar: 100 TL\nSatın Alım Tarihi: 25/08/2023"
+            android:textColor="@color/red" />
+
+    </LinearLayout>
+
+</LinearLayout>

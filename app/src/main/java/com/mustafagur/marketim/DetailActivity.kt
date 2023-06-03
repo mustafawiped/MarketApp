@@ -71,7 +71,7 @@ class DetailActivity : AppCompatActivity() {
         builder.setMessage(""+urunadi+" isimli ürünü silmek istediğine emin misin?")
         builder.setPositiveButton("Evet") { dialog, which ->
             val db = DatabaseHelper(this)
-            db.deleteData(urunid.toLong())
+            db.deleteData(urunid)
             db.close()
             Toast.makeText(this,"Başarıyla Ürün Silindi!",Toast.LENGTH_LONG).show()
             val go = Intent(this@DetailActivity, MainActivity::class.java)

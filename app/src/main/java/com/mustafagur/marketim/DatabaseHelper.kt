@@ -1,3 +1,4 @@
+
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -8,7 +9,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     companion object {
         private const val DATABASE_NAME = "database.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val TABLE_NAME = "veriler"
         private const val COLUMN_ID = "id"
         private const val COLUMN_PRODUCT = "urunadi"
@@ -16,11 +17,12 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         private const val COLUMN_AMOUNT = "urunadedi"
         private const val COLUMN_IMAGE = "urunfotografi"
         private const val COLUMN_EXD = "urunskt"
+        private const val COLUMN_UD = "uruneklenmet"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableQuery =
-            "CREATE TABLE IF NOT EXISTS $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COLUMN_PRODUCT TEXT, $COLUMN_PRICE TEXT , $COLUMN_AMOUNT BYTE , $COLUMN_EXD TEXT , $COLUMN_IMAGE BLOB)"
+            "CREATE TABLE IF NOT EXISTS $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COLUMN_PRODUCT TEXT, $COLUMN_PRICE TEXT , $COLUMN_AMOUNT BYTE , $COLUMN_EXD TEXT , $COLUMN_IMAGE BLOB, $COLUMN_UD TEXT)"
         db?.execSQL(createTableQuery)
     }
 
@@ -36,13 +38,14 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return db.rawQuery(query, null)
     }
 
-    fun insertData(product: String, price: String, amount: Byte, image: ByteArray, exd: String, note: String): Long {
+    fun insertData(product: String, price: String, amount: Byte, image: ByteArray, exd: String, ud: String): Long {
         val values = ContentValues()
         values.put(COLUMN_PRODUCT, product)
         values.put(COLUMN_PRICE, price)
         values.put(COLUMN_AMOUNT, amount)
         values.put(COLUMN_IMAGE, image)
         values.put(COLUMN_EXD, exd)
+        values.put(COLUMN_UD, ud)
         val db = this.writableDatabase
         return db.insert(TABLE_NAME, null, values)
     }
@@ -60,7 +63,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return db.update(TABLE_NAME, values, whereClause, whereArgs)
     }
 
-    fun deleteData(id: Long): Int {
+    fun deleteData(id: Int): Int {
         val db = this.writableDatabase
         val whereClause = "$COLUMN_ID = ?"
         val whereArgs = arrayOf(id.toString())

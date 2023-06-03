@@ -126,7 +126,7 @@
         android:background="@drawable/edittext_background"
         android:ems="10"
         android:hint="Giriniz.."
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:paddingLeft="10dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
