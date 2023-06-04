@@ -41,15 +41,13 @@ class ExpensesAdapterClass(private val list: ArrayList<DataClass3_Expenses>, pri
             itemimg.setBackgroundResource(R.drawable.image_background)
         }
         itemname.setText(veri.urunAdi)
-        val carpim = veri.urunFiyati * veri.urunAdedi.toDouble()
-        val format = DecimalFormat("0.#")
-        val sonuc = format.format(carpim)
-        itemdetay.setText("Harcanan Tutar: $sonuc TL\nSatın Alım Tarihi: ${veri.urunUD}")
+        itemdetay.setText("Harcanan Tutar: ${veri.urunFiyati} TL\nSatın Alım Tarihi: ${veri.urunUD}")
         view.setOnClickListener {
             val intent = Intent(context, DetailActivity::class.java)
             intent.putExtra("urunid", veri.id)
             intent.putExtra("urunadi", veri.urunAdi)
-            intent.putExtra("urunfiyati", veri.urunFiyati)
+            var urunfiyat = veri.urunFiyati / veri.urunAdedi
+            intent.putExtra("urunfiyati", urunfiyat)
             intent.putExtra("urunadedi", veri.urunAdedi.toString())
             intent.putExtra("urunskt", veri.urunSkt)
             intent.putExtra("urunfotografi", veri.urunFotografi)
