@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/edittext_background">
+
+    <!-- Başlık -->
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Marketim | Ayarlar"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:padding="16dp"
+        android:textStyle="bold" />
+
+    <!-- İçerik -->
+    <TextView
+        android:id="@+id/text_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ayarlar Menüsü henüz hazırlanmadı. Detaylar için mustafawiped'e ulaşın."
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp" />
+
+    <!-- Tamam Butonu -->
+    <Button
+        android:id="@+id/button_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tamam"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_background"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+</LinearLayout>

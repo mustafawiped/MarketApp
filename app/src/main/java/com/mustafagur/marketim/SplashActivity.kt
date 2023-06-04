@@ -3,6 +3,7 @@ package com.mustafagur.marketim
 import DatabaseHelper
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,8 @@ import java.util.*
 
 class SplashActivity : AppCompatActivity() {
 
+    private val beklemesure: Long = 3000 // bekleme süresi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -20,8 +23,10 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun load() {
-            val intent = Intent(this@SplashActivity, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            Handler().postDelayed({
+                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }, beklemesure)
         }
     }

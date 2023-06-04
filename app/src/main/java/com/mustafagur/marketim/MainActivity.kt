@@ -5,8 +5,12 @@ import android.annotation.SuppressLint
 import android.database.Cursor
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -41,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("Range")
+    @SuppressLint("Range", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -62,6 +66,18 @@ class MainActivity : AppCompatActivity() {
                 updateMenuColors(position)
             }
         })
+        var detaylart: TextView = findViewById(R.id.detaylarText)
+        detaylart.setOnClickListener {
+            val dialogView = LayoutInflater.from(this).inflate(R.layout.beta_dialog, null)
+            val builder = AlertDialog.Builder(this).setView(dialogView).setCancelable(true)
+            val dialog = builder.create()
+            val buttonOk: Button = dialogView.findViewById(R.id.button_ok)
+            buttonOk.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.setCanceledOnTouchOutside(true)
+            dialog.show()
+        }
     }
 
     override fun onDestroy() {
