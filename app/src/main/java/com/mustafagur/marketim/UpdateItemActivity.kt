@@ -11,11 +11,9 @@ import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import java.io.ByteArrayOutputStream
@@ -106,10 +104,18 @@ class UpdateItemActivity : AppCompatActivity() {
     }
 
     fun kaydetUrun(view: View) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Marketim | Bildiri")
-        builder.setMessage("$urunadi isimli ürünü güncellemek istediğine emin misin?")
-        builder.setPositiveButton("Evet") { dialog, which ->
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.sure_dialog, null)
+        val builder = AlertDialog.Builder(this).setView(dialogView).setCancelable(true)
+        val dialog = builder.create()
+        val baslik: TextView = dialogView.findViewById(R.id.text_title)
+        val icerik: TextView = dialogView.findViewById(R.id.text_content)
+        baslik.setText("Marketim | Güncelleme Uyarı")
+        icerik.setText("Bu ürünü güncellemek istediğinize emin misiniz? Bunun bir geri dönüşü olmayacak.")
+        val buttonOk: Button = dialogView.findViewById(R.id.button_sil)
+        val buttonNo: Button = dialogView.findViewById(R.id.button_silme)
+        buttonOk.setText("Evet, eminim")
+        buttonNo.setText("Hayır, bekle")
+        buttonOk.setOnClickListener {
             if (urunid == 0) {
                 Toast.makeText(this, "Hata oluştu. Hata Kodu: ERR2 | Lütfen Geliştirici Ekibine bildirin.", Toast.LENGTH_LONG).show()
             } else {
@@ -121,17 +127,23 @@ class UpdateItemActivity : AppCompatActivity() {
 
                 if (product.isEmpty() || price.isEmpty() || amount.toString().isEmpty() || exd.isEmpty()) {
                     Toast.makeText(this@UpdateItemActivity, "Ürün adı, fiyatı, adedi veya skt 'sı boş olamaz.", Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
+                    return@setOnClickListener
                 }
 
                 if (amount == null) {
                     Toast.makeText(this@UpdateItemActivity, "Ürün adedi en fazla 127 olabilir. Lütfen daha az adet miktarı girin.", Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
+                    return@setOnClickListener
                 }
 
                 if(product.length >= 20) {
                     Toast.makeText(this@UpdateItemActivity,"Ürün Adı 20 karakter veya daha fazla olamaz.",Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
+                    return@setOnClickListener
+                }
+
+                val control1 = price.toDoubleOrNull()
+                if(control1 == null) {
+                    Toast.makeText(this@UpdateItemActivity,"Ürün Fiyatı ondalıklı veya sayısal bir veri olmalı.",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
                 }
 
                 val drawable = urunImg.drawable
@@ -150,10 +162,15 @@ class UpdateItemActivity : AppCompatActivity() {
                 dbHelper.close()
             }
         }
-        builder.setNegativeButton("Hayır") { dialog, which -> }
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.show()
+        buttonNo.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.show()
     }
+
+
+
     fun showDatePickerDialog(view: View) {
         val currentDate = Calendar.getInstance()
         val year = currentDate.get(Calendar.YEAR)

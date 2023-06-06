@@ -2,14 +2,12 @@ package com.mustafagur.marketim
 
 import DatabaseHelper
 import android.annotation.SuppressLint
-import android.database.Cursor
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

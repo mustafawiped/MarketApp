@@ -6,7 +6,9 @@ import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -66,10 +68,20 @@ class DetailActivity : AppCompatActivity() {
     }
 
     fun urunuSil(view: View) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Marketim | Uyarı")
-        builder.setMessage(""+urunadi+" isimli ürünü silmek istediğine emin misin?")
-        builder.setPositiveButton("Evet") { dialog, which ->
+
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.sure_dialog, null)
+        val builder = AlertDialog.Builder(this).setView(dialogView).setCancelable(true)
+        val dialog = builder.create()
+        val baslik: TextView = dialogView.findViewById(R.id.text_title)
+        val icerik: TextView = dialogView.findViewById(R.id.text_content)
+        baslik.setText("Marketim | Silme İşlemi")
+        icerik.setText("Bu ürünü silmek istediğine emin misin? Bu işlemin geri dönüşü olmayacak.")
+        val buttonOk: Button = dialogView.findViewById(R.id.button_sil)
+        val buttonNo: Button = dialogView.findViewById(R.id.button_silme)
+        buttonOk.setText("Evet, eminim")
+        buttonNo.setText("Hayır, bekle")
+
+        buttonOk.setOnClickListener {
             val db = DatabaseHelper(this)
             db.deleteData(urunid)
             db.close()
@@ -77,9 +89,11 @@ class DetailActivity : AppCompatActivity() {
             val go = Intent(this@DetailActivity, MainActivity::class.java)
             startActivity(go)
         }
-        builder.setNegativeButton("Hayır") { dialog, which -> }
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.show()
+        buttonNo.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.show()
     }
 
     fun urunuGuncelle(view: View) {

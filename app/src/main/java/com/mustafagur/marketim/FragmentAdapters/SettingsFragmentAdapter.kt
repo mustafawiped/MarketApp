@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.mustafagur.marketim.R
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,13 +40,13 @@ class SettingsFragmentAdapter : Fragment(), AdapterView.OnItemSelectedListener {
         val spinnerValues = resources.getStringArray(R.array.spinner_values)
         val spinner2Values = resources.getStringArray(R.array.spinner2_values)
 
-        val spinnerListelemeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, spinnerValues)
-        spinnerListelemeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val spinnerListelemeAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item, spinnerValues)
+        spinnerListelemeAdapter.setDropDownViewResource(R.layout.spinner_drowdown)
         spinnerListeleme.adapter = spinnerListelemeAdapter
         spinnerListeleme.onItemSelectedListener = this
 
         val spinnerAyarAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item, spinner2Values)
-        spinnerAyarAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerAyarAdapter.setDropDownViewResource(R.layout.spinner_drowdown)
         spinnerAyar.adapter = spinnerAyarAdapter
         spinnerAyar.onItemSelectedListener = this
 
@@ -123,7 +124,10 @@ class SettingsFragmentAdapter : Fragment(), AdapterView.OnItemSelectedListener {
                 text.text = "Herhangi bir harcama yok."
             } else {
                 val toplamfiyat = dataList.sumByDouble { it.urunFiyati }
-                text.text = "Toplam Harcama: $toplamfiyat TL"
+                val format = DecimalFormat("#.###")
+                format.isDecimalSeparatorAlwaysShown = false
+                val result = format.format(toplamfiyat)
+                text.text = "Toplam Harcama: $result TL"
             }
         } else {
             text.text = "Herhangi bir harcama yok."
@@ -168,7 +172,6 @@ class SettingsFragmentAdapter : Fragment(), AdapterView.OnItemSelectedListener {
         }
         dataList = addList
         applyFilters()
-        Log.e("TAG","çalıştı 3 ${dataList.size}")
     }
     @SuppressLint("Range")
     private fun filterDataByLast30Days() {
@@ -210,7 +213,6 @@ class SettingsFragmentAdapter : Fragment(), AdapterView.OnItemSelectedListener {
         }
         dataList = addList
         applyFilters()
-        Log.e("TAG","çalıştı 1 ${dataList.size}")
     }
 
     private fun applyFilters() {
@@ -227,7 +229,10 @@ class SettingsFragmentAdapter : Fragment(), AdapterView.OnItemSelectedListener {
                 text.text = "Herhangi bir harcama yok."
             } else {
                 val toplamfiyat = dataList.sumByDouble { it.urunFiyati }
-                text.text = "Toplam Harcama: $toplamfiyat TL"
+                val format = DecimalFormat("#.###")
+                format.isDecimalSeparatorAlwaysShown = false
+                val result = format.format(toplamfiyat)
+                text.text = "Toplam Harcama: $result TL"
             }
         } else {
             dataList.clear()
@@ -236,6 +241,5 @@ class SettingsFragmentAdapter : Fragment(), AdapterView.OnItemSelectedListener {
         adapter = ExpensesAdapterClass(dataList, requireContext())
         listView.adapter = adapter
         adapter.notifyDataSetChanged()
-        Log.e("TAG","çalıştı 2 ${dataList.size}")
     }
 }

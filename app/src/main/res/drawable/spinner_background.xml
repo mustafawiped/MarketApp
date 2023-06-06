@@ -1,6 +1,7 @@
 <shape xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:ignore="ExtraText">
+    tools:ignore="ExtraText">4
+
     <solid android:color="@color/white" /> <!-- Arka plan rengi -->
     <!-- Kenarlık rengi -->
     <corners android:radius="10dp" /> <!-- Yuvarlak köşe yarıçapı -->

@@ -68,14 +68,10 @@ class ItemActivity : AppCompatActivity() {
             return
         }
 
-        val control1 = gelenUfiyat.toIntOrNull()
+        val control1 = gelenUfiyat.toDoubleOrNull()
         val control2 = gelenUadet.toIntOrNull()
         if (control1 == null || control2 == null) {
-            Toast.makeText(
-                this,
-                "Lütfen ürün fiyatını veya ürün adedini sayısal bir değer olarak girin.",
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(this, "Lütfen ürün fiyatını veya ürün adedini sayısal bir değer olarak girin.", Toast.LENGTH_LONG).show()
             return
         }
 
