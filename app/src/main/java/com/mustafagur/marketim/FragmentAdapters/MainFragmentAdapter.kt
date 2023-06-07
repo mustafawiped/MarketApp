@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.mustafagur.marketim.NotificationsClass
 import com.mustafagur.marketim.R
 import com.mustafagur.marketim.SktAdapterClass
 import java.text.SimpleDateFormat

@@ -9,10 +9,10 @@
         android:id="@+id/text_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Marketim | Ayarlar"
+        android:padding="16dp"
+        android:text="Marketim | Premium"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:padding="16dp"
         android:textStyle="bold" />
 
     <!-- İçerik -->
@@ -20,12 +20,12 @@
         android:id="@+id/text_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ayarlar Menüsü henüz hazırlanmadı. Detaylar için mustafawiped'e ulaşın."
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="8dp" />
+        android:paddingBottom="8dp"
+        android:text="Premium üyelik henüz aktif değil. Aktif olduğunda seni bilgilendireceğiz."
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
 
     <!-- Tamam Butonu -->
     <Button

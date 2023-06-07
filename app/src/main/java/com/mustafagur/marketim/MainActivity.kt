@@ -2,6 +2,8 @@ package com.mustafagur.marketim
 
 import DatabaseHelper
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,6 +34,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var toggle: ActionBarDrawerToggle
+
+    private val notificationsReceiver = NotificationsClass()
 
     override fun onStart() {
         super.onStart()
@@ -85,10 +89,31 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.settings_nd -> {
-                    Toast.makeText(this,"Ayarlar 'a tıklandı.",Toast.LENGTH_SHORT).show()
+                    drawerLayout.closeDrawer(navigationView)
+                    val intent = Intent(this,SettingsActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.backnotifi_nd -> {
+                    drawerLayout.closeDrawer(navigationView)
+                    Toast.makeText(this,"Geri Bildirim 'e tıklandı.",Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.premium_nd -> {
+                    drawerLayout.closeDrawer(navigationView)
+                    val dialogView = LayoutInflater.from(this).inflate(R.layout.beta_dialog, null)
+                    val builder = AlertDialog.Builder(this).setView(dialogView).setCancelable(true)
+                    val dialog = builder.create()
+                    val buttonOk: Button = dialogView.findViewById(R.id.button_ok)
+                    buttonOk.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.setCanceledOnTouchOutside(true)
+                    dialog.show()
                     true
                 }
                 R.id.contact_nd -> {
+                    drawerLayout.closeDrawer(navigationView)
                     Toast.makeText(this,"Hakkımızda 'ya tıklandı.",Toast.LENGTH_SHORT).show()
                     true
                 }
@@ -100,6 +125,8 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.openDrawer(navigationView)
         }
 
+        val notifications = NotificationsClass()
+        notifications.scheduleNotification(this)
     }
 
     override fun onDestroy() {
@@ -150,4 +177,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-

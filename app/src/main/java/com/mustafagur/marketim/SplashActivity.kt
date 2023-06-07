@@ -14,7 +14,7 @@ import java.util.*
 
 class SplashActivity : AppCompatActivity() {
 
-    private val beklemesure: Long = 2000 // bekleme süresi
+    private val beklemesure: Long = 250 // bekleme süresi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

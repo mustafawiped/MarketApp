@@ -29,12 +29,20 @@ class NotificationsClass : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             scheduleNotification(context)
+        } else if (intent.action == "com.mustafagur.marketim.SEND_NOTIFICATION") {
+            sendNotification(context)
         }
     }
 
-    private fun scheduleNotification(context: Context) {
+    public fun scheduleNotification(context: Context) {
         val intent = Intent(context, NotificationsClass::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        intent.action = "com.mustafagur.marketim.SEND_NOTIFICATION"
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
@@ -51,19 +59,37 @@ class NotificationsClass : BroadcastReceiver() {
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
+            selectedTime,
             AlarmManager.INTERVAL_DAY,
             pendingIntent
         )
         createNotificationChannel(context)
-        sendNotification(context)
+        val now = Calendar.getInstance()
+        now.set(Calendar.HOUR_OF_DAY, 23)   // Alarm saatini buradan ayarlıyon.
+        now.set(Calendar.MINUTE, 51)
+        now.set(Calendar.SECOND, 0)
+
+        val alarmIntent = Intent(context, NotificationsClass::class.java)
+        alarmIntent.action = "com.mustafagur.marketim.SEND_NOTIFICATION"
+        val notificationPendingIntent = PendingIntent.getBroadcast(
+            context,
+            1,
+            alarmIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            now.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            notificationPendingIntent
+        )
     }
 
     private fun getSelectedTime(calendar: Calendar): Long {
         val selectedCalendar = calendar.clone() as Calendar
 
-        selectedCalendar.set(Calendar.HOUR_OF_DAY, 20)
-        selectedCalendar.set(Calendar.MINUTE, 30)
+        selectedCalendar.set(Calendar.HOUR_OF_DAY, 23)
+        selectedCalendar.set(Calendar.MINUTE, 35)
         selectedCalendar.set(Calendar.SECOND, 0)
 
         val currentTime = Calendar.getInstance().timeInMillis
@@ -80,12 +106,14 @@ class NotificationsClass : BroadcastReceiver() {
             val channel = NotificationChannel(
                 CHANNEL_ID,
                 CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            channel.enableLights(true)
-            channel.lightColor = Color.RED
-            channel.enableVibration(true)
-            channel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                lightColor = Color.BLUE
+                enableLights(true)
+                enableVibration(true)
+                vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+            }
+
             val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
@@ -96,48 +124,46 @@ class NotificationsClass : BroadcastReceiver() {
     private fun sendNotification(context: Context) {
         val database = DatabaseHelper(context)
         val cursor = database.getAllData()
-        if (cursor != null) {
+        if (cursor != null && cursor.moveToFirst()) {
+            var sayac = 0
             do {
                 val currentDate = Calendar.getInstance().time
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val expiryDateString = cursor.getString(cursor.getColumnIndex("urunskt"))
                 val expiryDate = dateFormat.parse(expiryDateString)
                 if (expiryDate != null && expiryDate.time - currentDate.time < 30L * 24L * 60L * 60L * 1000L) {
-                    val urunadi = cursor.getString(cursor.getColumnIndex("urunadi"))
-                    val daysRemaining =
-                        ((expiryDate.time - currentDate.time) / (24L * 60L * 60L * 1000L)).toString()
-                    val notificationText =
-                        "Selamlar! $urunadi isimli ürününün son kullanma tarihine $daysRemaining Gün kaldı."
-                    val notificationTitle = "$urunadi'ın SKT'i Yaklaştı!"
-                    val notificationIcon = R.drawable.logo
-                    val notificationIntent = Intent(context, MainActivity::class.java)
-                    notificationIntent.flags =
-                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    val pendingIntent = PendingIntent.getActivity(
-                        context,
-                        0,
-                        notificationIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                    )
-                    val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
-                        .setSmallIcon(notificationIcon)
-                        .setContentTitle(notificationTitle)
-                        .setContentText(notificationText)
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                        .setContentIntent(pendingIntent)
-                        .setAutoCancel(true)
-
-                    val notificationManager = NotificationManagerCompat.from(context)
-                    if (ActivityCompat.checkSelfPermission(
-                            context,
-                            Manifest.permission.ACCESS_NOTIFICATION_POLICY
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        return
-                    }
-                    notificationManager.notify(0, notificationBuilder.build())
+                    sayac += 1
                 }
             } while (cursor.moveToNext())
+            val notificationText = "Selamlar! $sayac tane ürünün son kullanma tarihi yaklaştı. Göz atmak için tıkla!"
+            val notificationTitle = "SKT 'si yaklaşan ürünler var!"
+            val notificationIcon = R.drawable.logo
+            val notificationIntent = Intent(context, MainActivity::class.java)
+            notificationIntent.flags =
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            val pendingIntent = PendingIntent.getActivity(
+                context,
+                0,
+                notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(notificationIcon)
+                .setContentTitle(notificationTitle)
+                .setContentText(notificationText)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+
+            val notificationManager = NotificationManagerCompat.from(context)
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_NOTIFICATION_POLICY
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+            notificationManager.notify(0, notificationBuilder.build())
         }
     }
 }
