@@ -9,5 +9,6 @@
     android:shadowDy="1"
     android:shadowRadius="2"
     android:fontFamily="sans-serif-medium"
+    android:drawableStart="@drawable/baseline_arrow_right_24"
     android:background="@drawable/spinner_dropdown_background2" />
 

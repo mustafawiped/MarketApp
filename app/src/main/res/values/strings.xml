@@ -2,6 +2,8 @@
     <string name="app_name">Marketim</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="open">Aç</string>
+    <string name="close">Kapat</string>
     <string-array name="spinner_values">
         <item>Tüm Harcamaları Göster</item>
         <item>Son 30 Günün Harcamaları</item>

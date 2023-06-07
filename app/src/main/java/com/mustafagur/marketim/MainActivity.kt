@@ -8,11 +8,15 @@ import android.view.LayoutInflater
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.navigation.NavigationView
 import com.mustafagur.marketim.FragmentAdapters.ItemsFragmentAdapter
 import com.mustafagur.marketim.FragmentAdapters.MainFragmentAdapter
 import com.mustafagur.marketim.FragmentAdapters.SettingsFragmentAdapter
@@ -24,6 +28,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainMenu: TextView
     private lateinit var productsMenu: TextView
     private lateinit var settingsMenu: TextView
+
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
+    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onStart() {
         super.onStart()
@@ -64,18 +72,34 @@ class MainActivity : AppCompatActivity() {
                 updateMenuColors(position)
             }
         })
+
+        //Navigation Drawer kısmı.
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navigationView = findViewById(R.id.nav_view)
+
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        navigationView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.settings_nd -> {
+                    Toast.makeText(this,"Ayarlar 'a tıklandı.",Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.contact_nd -> {
+                    Toast.makeText(this,"Hakkımızda 'ya tıklandı.",Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
         var detaylart: TextView = findViewById(R.id.detaylarText)
         detaylart.setOnClickListener {
-            val dialogView = LayoutInflater.from(this).inflate(R.layout.beta_dialog, null)
-            val builder = AlertDialog.Builder(this).setView(dialogView).setCancelable(true)
-            val dialog = builder.create()
-            val buttonOk: Button = dialogView.findViewById(R.id.button_ok)
-            buttonOk.setOnClickListener {
-                dialog.dismiss()
-            }
-            dialog.setCanceledOnTouchOutside(true)
-            dialog.show()
+            drawerLayout.openDrawer(navigationView)
         }
+
     }
 
     override fun onDestroy() {

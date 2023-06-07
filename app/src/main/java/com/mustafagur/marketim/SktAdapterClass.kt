@@ -72,7 +72,7 @@ class SktAdapterClass(private val list: ArrayList<DataClass2>, private val conte
                 context.startActivity(intent)
             }
         } else {
-            itemadet.text = "SKT 'si Geçti"
+            itemadet.text = "SKT Geçti!"
             itemadet.setTextColor(Color.RED)
             itemname.setTextColor(Color.RED)
             itemskt.setTextColor(Color.RED)
@@ -81,6 +81,11 @@ class SktAdapterClass(private val list: ArrayList<DataClass2>, private val conte
                 val builder = AlertDialog.Builder(context).setView(dialogView).setCancelable(true)
                 val dialog = builder.create()
                 val buttonOk: Button = dialogView.findViewById(R.id.button_sil)
+                val text: TextView = dialogView.findViewById(R.id.text_content)
+                var kalangun = Math.abs(veri.urunKalanGun.toInt())
+                if (kalangun == 0)
+                    text.setText("Ürünün son kullanma tarihi bugün geçmiş. Silmek ister misiniz?")
+                else text.setText("Ürünün son kullanma tarihi $kalangun Gün önce geçmiş. Silmek ister misiniz?")
                 buttonOk.setOnClickListener {
                     val db = DatabaseHelper(context)
                     db.deleteData(veri.id)

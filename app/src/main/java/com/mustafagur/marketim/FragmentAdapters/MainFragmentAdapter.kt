@@ -63,7 +63,6 @@ class MainFragmentAdapter : Fragment() {
                     val uadi = cursor.getString(cursor.getColumnIndex("urunadi"))
                     val id = cursor.getInt(cursor.getColumnIndex("id"))
                     var kalanGun = ((sonKtarihi.time - mevcutTRH.time) / (24L * 60L * 60L * 1000L)).toString()
-                    var control = kalanGun.toIntOrNull()
                     val urunimg = cursor.getBlob(cursor.getColumnIndex("urunfotografi"))
                     val urunskt = cursor.getString(cursor.getColumnIndex("urunskt"))
                     val urunfiyati = cursor.getString(cursor.getColumnIndex("urunfiyati"))

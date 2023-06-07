@@ -3,6 +3,7 @@ package com.mustafagur.marketim
 import DatabaseHelper
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -56,7 +57,14 @@ class DetailActivity : AppCompatActivity() {
         detayUadi.setText("Ürün Adı: $urunadi")
         detayUfiyat.setText("Ürün Fiyatı: ${urunfiyati.toString()}")
         detayUadet.setText("Ürün Adedi: "+ urunadedi.toString())
-        detayUkz.setText("Kullanılabilirlik Süresi: $daysRemaining Gün")
+        if (daysRemaining.toInt() <= 0) {
+            detayUkz.setText("Ürün Kullanıma Uygun değil")
+            detayUkz.setTextColor(Color.RED)
+        }
+        else {
+            detayUkz.setText("Kullanılabilirlik Süresi: $daysRemaining Gün")
+            detayUkz.setTextColor(Color.rgb(255,64,129))
+        }
         detayUskt.setText("Ürün SKT: $urunskt")
         val bitmap = urunimg?.let { BitmapFactory.decodeByteArray(urunimg, 0, it.size) }
         if (bitmap != null) {

@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/settings_nd"
+            android:icon="@drawable/settings_icon"
+            android:title="Ayarlar"
+            />
+        <item android:id="@+id/backnotifi_nd"
+            android:icon="@drawable/backnotification_icon"
+            android:title="Geri Bildirim"
+            />
+        <item android:id="@+id/premium_nd"
+            android:icon="@drawable/premium_icon"
+            android:title="Premium"
+            />
+        <item android:id="@+id/contact_nd"
+            android:icon="@drawable/contact_icon"
+            android:title="Hakkımızda"
+            />
+    </group>
+</menu>
