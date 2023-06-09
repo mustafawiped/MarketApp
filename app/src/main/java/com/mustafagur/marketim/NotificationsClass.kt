@@ -45,8 +45,21 @@ class NotificationsClass : BroadcastReceiver() {
                             val remainingDays = kalanGunuHesapla(today, sonKtarihiDate)
                             if (remainingDays <= 5) {
                                 Log.e("TAG","bildirim id: $norifiId")
+                                val urunid = cursor.getInt(cursor.getColumnIndex("id"))
                                 val urunadi = cursor.getString(cursor.getColumnIndex("urunadi"))
-                                sendNotification(context,"$urunadi isimli ürünün son kullanma tarihinin geçmesine son $remainingDays Gün!","$urunadi 'in Günü Yaklaştı!", norifiId)
+                                val urunimg = cursor.getBlob(cursor.getColumnIndex("urunfotografi"))
+                                val urunskt = cursor.getString(cursor.getColumnIndex("urunskt"))
+                                val urunfiyati = cursor.getString(cursor.getColumnIndex("urunfiyati"))
+                                val urunaded = cursor.getInt(cursor.getColumnIndex("urunadedi"))
+                                val intent = Intent(context, DetailActivity::class.java)
+                                intent.putExtra("urunid", urunid)
+                                intent.putExtra("urunadi", urunadi)
+                                intent.putExtra("urunfiyati", urunfiyati)
+                                intent.putExtra("urunadedi", urunaded)
+                                intent.putExtra("urunskt", urunskt)
+                                intent.putExtra("urunfotografi", urunimg)
+                                intent.putExtra("notifications",true)
+                                sendNotification(context,"$urunadi isimli ürünün son kullanma tarihinin geçmesine son $remainingDays Gün!","$urunadi 'in Günü Yaklaştı!", norifiId,intent)
                                 norifiId++
                             }
                         }
@@ -70,8 +83,10 @@ class NotificationsClass : BroadcastReceiver() {
                         }
                     }
                 }
-                if(sayac != 0)
-                    sendNotification(context,"$sayac tane ürünün son kullanma tarihi 5 günden az kaldı! Detay için tıkla!","Zamanımız Tükeniyor!!",0)
+                if (sayac != 0) {
+                    val intent = Intent(context,MainActivity::class.java)
+                    sendNotification(context, "$sayac tane ürünün son kullanma tarihi 5 günden az kaldı! Detay için tıkla!", "Zamanımız Tükeniyor!!", 0,intent)
+                }
             }
         }
     }
@@ -159,9 +174,8 @@ class NotificationsClass : BroadcastReceiver() {
     }
 
     @SuppressLint("Range")
-    private fun sendNotification(context: Context, notificationText: String, notificationTitle: String, notificationId: Int) {
+    private fun sendNotification(context: Context, notificationText: String, notificationTitle: String, notificationId: Int,notificationIntent: Intent) {
             val notificationIcon = R.drawable.logo
-            val notificationIntent = Intent(context, MainActivity::class.java)
             notificationIntent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             val pendingIntent = PendingIntent.getActivity(

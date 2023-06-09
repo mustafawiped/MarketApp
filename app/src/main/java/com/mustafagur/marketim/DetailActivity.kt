@@ -24,6 +24,7 @@ class DetailActivity : AppCompatActivity() {
     var urunadedi = ""
     var urunskt = ""
     var urunimg: ByteArray? = null
+    var notificationdanmi: Boolean = false
     private lateinit var detayUadi: TextView
     private lateinit var detayUfiyat: TextView
     private lateinit var detayUadet: TextView
@@ -49,6 +50,7 @@ class DetailActivity : AppCompatActivity() {
         urunfiyati = intent.getDoubleExtra("urunfiyati", 0.0)
         urunadedi = intent.getStringExtra("urunadedi").toString()
         urunskt = intent.getStringExtra("urunskt").toString()
+        notificationdanmi = intent.getBooleanExtra("notifications",false)
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val expiryDate = dateFormat.parse(urunskt)
@@ -120,6 +122,10 @@ class DetailActivity : AppCompatActivity() {
     }
 
     fun backToMain(view: View) {
+        if (notificationdanmi) {
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
         finish()
     }
 }
