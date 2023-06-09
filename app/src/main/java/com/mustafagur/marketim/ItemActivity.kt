@@ -41,7 +41,9 @@ class ItemActivity : AppCompatActivity() {
         kayitUadet = findViewById(R.id.kayitUadet)
         kayitUskt = findViewById(R.id.kayitUskt)
         kayitUresim = findViewById(R.id.kayitUlogo)
-        selectedImage = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+        val drawableId = resources.getIdentifier("logo", "drawable", packageName)
+        val defaultLogo = BitmapFactory.decodeResource(resources, drawableId)
+        selectedImage = resizeImage(defaultLogo)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,6 +95,9 @@ class ItemActivity : AppCompatActivity() {
         val imageByteArray = convertBitmapToByteArray(selectedImage)
         db.insertData(gelenUadi, gelenUfiyat, gelenUadet.toByte(), imageByteArray, gelenUskt, bugununTarihi)
         db.close()
+        finish()
+        val main = MainActivity()
+        main.finish()
         Toast.makeText(this, "Ürün başarıyla kaydedildi.", Toast.LENGTH_LONG).show()
         val bb = Intent(this@ItemActivity,MainActivity::class.java)
         startActivity(bb)
@@ -187,7 +192,7 @@ class ItemActivity : AppCompatActivity() {
         val month = currentDate.get(Calendar.MONTH)
         val day = currentDate.get(Calendar.DAY_OF_MONTH)
 
-        val datePickerDialog = DatePickerDialog(this, { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
+        val datePickerDialog = DatePickerDialog(this, R.style.CustomTimePickerDialog,{ _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
             val formattedDate = String.format("%02d/%02d/%04d", selectedDay, selectedMonth + 1, selectedYear)
             kayitUskt.setText(formattedDate)
         }, year, month, day)

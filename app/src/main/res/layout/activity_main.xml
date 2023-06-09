@@ -109,6 +109,7 @@
         app:itemTextColor="@color/pink"
         app:itemIconTint="@color/pink"
         app:itemIconSize="20dp"
+        app:itemTextAppearance="@style/NavigationViewStyle"
         app:menu="@menu/drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

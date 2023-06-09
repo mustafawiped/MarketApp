@@ -8,9 +8,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.graphics.Color
-import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.ActivityCompat
@@ -26,12 +24,69 @@ class NotificationsClass : BroadcastReceiver() {
         const val CHANNEL_NAME = "SKT Bildirimi"
     }
 
+    @SuppressLint("Range")
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             scheduleNotification(context)
         } else if (intent.action == "com.mustafagur.marketim.SEND_NOTIFICATION") {
-            sendNotification(context)
+            val sharedPreferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+            val control = sharedPreferences.getBoolean("tumurunlerbildirim", false)
+            if(control) {
+                val db = DatabaseHelper(context)
+                val cursor = db.getAllData()
+                var norifiId = 0
+                cursor?.let {
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    val today = Calendar.getInstance()
+                    while (cursor.moveToNext()) {
+                        val sonKtarihi = cursor.getString(cursor.getColumnIndex("urunskt"))
+                        val sonKtarihiDate = dateFormat.parse(sonKtarihi)
+                        if (sonKtarihiDate != null) {
+                            val remainingDays = kalanGunuHesapla(today, sonKtarihiDate)
+                            if (remainingDays <= 5) {
+                                val urunadi = cursor.getString(cursor.getColumnIndex("urunadi"))
+                                sendNotification(context,"$urunadi isimli ürünün son kullanma tarihinin geçmesine son $remainingDays Gün!","$urunadi 'in Günü Yaklaştı!", norifiId)
+                                norifiId++
+                                Log.e("TAG","bildirim id: $norifiId")
+                            }
+                        }
+                    }
+                }
+            } else {
+                val db = DatabaseHelper(context)
+                val cursor = db.getAllData()
+                var sayac = 0
+                cursor?.let {
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    val today = Calendar.getInstance()
+                    while (cursor.moveToNext()) {
+                        val sonKtarihi = cursor.getString(cursor.getColumnIndex("urunskt"))
+                        val sonKtarihiDate = dateFormat.parse(sonKtarihi)
+                        if (sonKtarihiDate != null) {
+                            val remainingDays = kalanGunuHesapla(today, sonKtarihiDate)
+                            if (remainingDays <= 5) {
+                                sayac++
+                            }
+                        }
+                    }
+                }
+                if(sayac != 0)
+                    sendNotification(context,"$sayac tane ürünün son kullanma tarihi 5 günden az kaldı! Detay için tıkla!","Zamanımız Tükeniyor!!",0)
+            }
         }
+    }
+
+    fun kalanGunuHesapla(startDate: Calendar, endDate: Date): Int {
+        val baslangic = startDate.clone() as Calendar
+        val son = Calendar.getInstance()
+        son.time = endDate
+        son.set(Calendar.HOUR_OF_DAY, 0)
+        son.set(Calendar.MINUTE, 0)
+        son.set(Calendar.SECOND, 0)
+        son.set(Calendar.MILLISECOND, 0)
+        val milisaniye = 24 * 60 * 60 * 1000L
+        val diff = son.timeInMillis - baslangic.timeInMillis
+        return (diff / milisaniye).toInt()
     }
 
     public fun scheduleNotification(context: Context) {
@@ -47,28 +102,27 @@ class NotificationsClass : BroadcastReceiver() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
 
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = System.currentTimeMillis()
-
-        val currentTime = Calendar.getInstance().timeInMillis
-        val selectedTime = getSelectedTime(calendar)
-
-        if (selectedTime <= currentTime) {
-            calendar.add(Calendar.DAY_OF_YEAR, 1)
-        }
-
-        alarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            selectedTime,
-            AlarmManager.INTERVAL_DAY,
-            pendingIntent
-        )
-        createNotificationChannel(context)
         val now = Calendar.getInstance()
-        now.set(Calendar.HOUR_OF_DAY, 23)   // Alarm saatini buradan ayarlıyon.
-        now.set(Calendar.MINUTE, 51)
-        now.set(Calendar.SECOND, 0)
-
+        createNotificationChannel(context)
+        val sharedPreferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val durum = sharedPreferences.getBoolean("gunlukbildirimdurum", false)
+        if(durum) {
+            val alarm = sharedPreferences.getString("gunlukbildirimsaat","")
+            if (alarm.equals("") || alarm == null) {
+                now.set(Calendar.HOUR_OF_DAY, 23)
+                now.set(Calendar.MINUTE, 30)
+                now.set(Calendar.SECOND, 0)
+            } else {
+                var split = alarm.split(":")
+                now.set(Calendar.HOUR_OF_DAY, split[0].toInt())
+                now.set(Calendar.MINUTE, split[1].toInt())
+                now.set(Calendar.SECOND, 0)
+            }
+        } else {
+            now.set(Calendar.HOUR_OF_DAY, 23)
+            now.set(Calendar.MINUTE, 30)
+            now.set(Calendar.SECOND, 0)
+        }
         val alarmIntent = Intent(context, NotificationsClass::class.java)
         alarmIntent.action = "com.mustafagur.marketim.SEND_NOTIFICATION"
         val notificationPendingIntent = PendingIntent.getBroadcast(
@@ -83,22 +137,6 @@ class NotificationsClass : BroadcastReceiver() {
             AlarmManager.INTERVAL_DAY,
             notificationPendingIntent
         )
-    }
-
-    private fun getSelectedTime(calendar: Calendar): Long {
-        val selectedCalendar = calendar.clone() as Calendar
-
-        selectedCalendar.set(Calendar.HOUR_OF_DAY, 23)
-        selectedCalendar.set(Calendar.MINUTE, 35)
-        selectedCalendar.set(Calendar.SECOND, 0)
-
-        val currentTime = Calendar.getInstance().timeInMillis
-        val selectedTime = selectedCalendar.timeInMillis
-
-        if (selectedTime <= currentTime) {
-            selectedCalendar.add(Calendar.DAY_OF_YEAR, 1)
-        }
-        return selectedCalendar.timeInMillis
     }
 
     private fun createNotificationChannel(context: Context) {
@@ -121,29 +159,14 @@ class NotificationsClass : BroadcastReceiver() {
     }
 
     @SuppressLint("Range")
-    private fun sendNotification(context: Context) {
-        val database = DatabaseHelper(context)
-        val cursor = database.getAllData()
-        if (cursor != null && cursor.moveToFirst()) {
-            var sayac = 0
-            do {
-                val currentDate = Calendar.getInstance().time
-                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val expiryDateString = cursor.getString(cursor.getColumnIndex("urunskt"))
-                val expiryDate = dateFormat.parse(expiryDateString)
-                if (expiryDate != null && expiryDate.time - currentDate.time < 30L * 24L * 60L * 60L * 1000L) {
-                    sayac += 1
-                }
-            } while (cursor.moveToNext())
-            val notificationText = "Selamlar! $sayac tane ürünün son kullanma tarihi yaklaştı. Göz atmak için tıkla!"
-            val notificationTitle = "SKT 'si yaklaşan ürünler var!"
+    private fun sendNotification(context: Context, notificationText: String, notificationTitle: String, notificationId: Int) {
             val notificationIcon = R.drawable.logo
             val notificationIntent = Intent(context, MainActivity::class.java)
             notificationIntent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             val pendingIntent = PendingIntent.getActivity(
                 context,
-                0,
+                notificationId,
                 notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
@@ -166,4 +189,3 @@ class NotificationsClass : BroadcastReceiver() {
             notificationManager.notify(0, notificationBuilder.build())
         }
     }
-}

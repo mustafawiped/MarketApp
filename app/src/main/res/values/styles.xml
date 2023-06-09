@@ -6,4 +6,16 @@
     <style name="PopupStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:background">@android:color/transparent</item>
     </style>
+    <style name="CustomTimePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@color/white</item> <!-- Arkaplan rengi: Pembe -->
+        <item name="android:textColorPrimary">@color/pink</item> <!-- Yazı rengi: Beyaz -->
+        <item name="android:colorControlNormal">@color/white</item>
+        <item name="android:focusedMonthDateColor">@color/pink</item>
+        <item name="android:colorAccent">@color/pink</item>
+        <item name="android:textColor">@color/pink</item>
+        <item name="android:colorControlActivated">@color/pink</item>
+    </style>
+    <style name="NavigationViewStyle" parent="@style/Widget.Design.NavigationView">
+        <item name="android:textSize">15dp</item> <!-- Yazı boyutu -->
+    </style>
 </resources>

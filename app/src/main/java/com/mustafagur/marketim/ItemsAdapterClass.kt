@@ -10,9 +10,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.mustafagur.marketim.FragmentAdapters.DataClass2
 import kotlin.collections.ArrayList
 
-class ItemsAdapterClass(private val list: ArrayList<DataClass>, private val context: Context) : BaseAdapter() {
+class ItemsAdapterClass(val list: ArrayList<DataClass2>, private val context: Context) : BaseAdapter() {
+
     override fun getCount(): Int {
         return list.size
     }

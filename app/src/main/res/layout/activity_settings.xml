@@ -84,7 +84,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/otomatikSilmeTv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
@@ -99,7 +99,7 @@
             app:layout_constraintVertical_bias="0.064" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/tumurunBildirimTv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -111,11 +111,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.091"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/otomatikSilmeTv2"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/YiliGecmisVeriSilTv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -127,11 +127,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.087"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10"
+            app:layout_constraintTop_toBottomOf="@+id/tumurunBildirimTv2"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/GunlukBildirimSaatTv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -143,67 +143,102 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.096"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            app:layout_constraintTop_toBottomOf="@+id/YiliGecmisVeriSilTv2"
             app:layout_constraintVertical_bias="0.0" />
-
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleX="1.2"
-            android:scaleY="1.2"
-            android:thumbTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/textView5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.625"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toTopOf="@+id/textView5"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Switch
-            android:id="@+id/switch2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleX="1.2"
-            android:scaleY="1.2"
-            android:thumbTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/textView9"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.625"
-            app:layout_constraintStart_toEndOf="@+id/textView9"
-            app:layout_constraintTop_toTopOf="@+id/textView9"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <Switch
-            android:id="@+id/switch4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleX="1.2"
-            android:scaleY="1.2"
-            android:thumbTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/textView11"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.63"
-            app:layout_constraintStart_toEndOf="@+id/textView11"
-            app:layout_constraintTop_toTopOf="@+id/textView11"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <Switch
-            android:id="@+id/switch5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleX="1.2"
-            android:scaleY="1.2"
-            android:thumbTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/textView13"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.63"
-            app:layout_constraintStart_toEndOf="@+id/textView13"
-            app:layout_constraintTop_toTopOf="@+id/textView13"
-            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/BilgiMesajiTv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Günlük Bilgi Mesajı"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.096"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/GunlukBildirimSaatTv2"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Switch
+            android:id="@+id/otomatikSilmeSw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:thumbTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/otomatikSilmeTv1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/otomatikSilmeTv1"
+            app:layout_constraintTop_toTopOf="@+id/otomatikSilmeTv1"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Switch
+            android:id="@+id/tumurunBildirimSw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:thumbTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/tumurunBildirimTv1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tumurunBildirimTv1"
+            app:layout_constraintTop_toTopOf="@+id/tumurunBildirimTv1"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Switch
+            android:id="@+id/YiliGecmisVeriSilSw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:thumbTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/YiliGecmisVeriSilTv1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/YiliGecmisVeriSilTv1"
+            app:layout_constraintTop_toTopOf="@+id/YiliGecmisVeriSilTv1"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Switch
+            android:id="@+id/GunlukBildirimSaatSw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:thumbTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/GunlukBildirimSaatTv1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/GunlukBildirimSaatTv1"
+            app:layout_constraintTop_toTopOf="@+id/GunlukBildirimSaatTv1"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Switch
+            android:id="@+id/BilgiMesajiSw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:thumbTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/BilgiMesajiTv1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/BilgiMesajiTv1"
+            app:layout_constraintTop_toTopOf="@+id/BilgiMesajiTv1"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/otomatikSilmeTv2"
             android:layout_width="325dp"
             android:layout_height="47dp"
             android:text="Bu ayar kaydettiğiniz ürünlerin son kullanma tarihi geçtiğinde otomatik olarak silmeye yarar. "
@@ -211,58 +246,61 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:layout_constraintStart_toStartOf="@+id/otomatikSilmeTv1"
+            app:layout_constraintTop_toBottomOf="@+id/otomatikSilmeTv1"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/tumurunBildirimTv2"
             android:layout_width="325dp"
             android:layout_height="47dp"
-            android:text="Bu ayar son kullanma tarihi yaklaşan tüm ürünlerin bildirimlerini size tek tek gönderir."
+            android:text="Bu ayar son kullanma tarihi 5 gün veya daha az kalan ürünlerin bildirimlerini ayrı ayrı gönderir."
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            app:layout_constraintStart_toStartOf="@+id/tumurunBildirimTv1"
+            app:layout_constraintTop_toBottomOf="@+id/tumurunBildirimTv1"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/YiliGecmisVeriSilTv2"
             android:layout_width="325dp"
             android:layout_height="47dp"
-            android:text="Bu ayar eğer açık olursa, önceki yıl kaydedilen tüm ürünleri otomatik siler."
+            android:text="Ayar açıksa, önceki yıl kaydedilen ve son kullanma tarihi geçmiş tüm ürünleri otomatik siler."
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:layout_constraintStart_toStartOf="@+id/tumurunBildirimTv1"
+            app:layout_constraintTop_toBottomOf="@+id/YiliGecmisVeriSilTv1"
             app:layout_constraintVertical_bias="0.0" />
 
-        <EditText
-            android:id="@+id/editTextTextPersonName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/spinner_background"
-            android:clickable="true"
-            android:ems="10"
-            android:focusable="false"
-            android:hint="Saat Seçiniz."
-            android:inputType="none"
-            android:onClick="saatsec"
-            android:padding="5dp"
-            android:paddingLeft="10dp"
-            android:textColor="@color/pink"
-            android:textColorHint="@color/dark_gray"
-            android:textSize="20dp"
+        <TextView
+            android:id="@+id/GunlukBildirimSaatTv2"
+            android:layout_width="325dp"
+            android:layout_height="47dp"
+            android:text="Ayar açıksa, belirlediğiniz saatte her gün bildirim gönderir. Ayar kapalıysa her gün 21:30 'da gönderir."
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView13"
-            app:layout_constraintTop_toBottomOf="@+id/textView13"
-            app:layout_constraintVertical_bias="0.123" />
+            app:layout_constraintStart_toStartOf="@+id/GunlukBildirimSaatTv1"
+            app:layout_constraintTop_toBottomOf="@+id/GunlukBildirimSaatTv1"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/BilgiMesajiTv2"
+            android:layout_width="325dp"
+            android:layout_height="47dp"
+            android:text="Bu ayar anasayfadaki günlük bilgi kanalını açmaya ve kapatmaya yarar."
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/BilgiMesajiTv1"
+            app:layout_constraintTop_toBottomOf="@+id/BilgiMesajiTv1"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -280,17 +318,6 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <Button
-            android:id="@+id/button8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="17dp"
-            android:background="@drawable/button_background"
-            android:text="KAYDET" />
-
-        <Button
             android:id="@+id/button9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -298,6 +325,7 @@
             android:textColor="@color/white"
             android:fontFamily="sans-serif-medium"
             android:textSize="17dp"
+            android:onClick="sifirla"
             android:background="@drawable/button_background"
             android:text="SIFIRLA" />
     </LinearLayout>

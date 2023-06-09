@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navigationView: NavigationView
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private val notificationsReceiver = NotificationsClass()
-
     override fun onStart() {
         super.onStart()
         listeyiGuncelle()
@@ -49,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         val fragmentList = fragmentManager.fragments
         for (fragment in fragmentList) {
             if (fragment is ItemsFragmentAdapter) {
-                fragment.updateList(cursor)
+                fragment.updateList(cursor,this,true)
                 return
             }
         }
@@ -92,6 +90,7 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout.closeDrawer(navigationView)
                     val intent = Intent(this,SettingsActivity::class.java)
                     startActivity(intent)
+                    finish()
                     true
                 }
                 R.id.backnotifi_nd -> {

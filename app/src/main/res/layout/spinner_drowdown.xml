@@ -1,14 +1,10 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="40dp"
     android:padding="8dp"
     android:textColor="@color/white"
     android:textSize="16dp"
-    android:shadowColor="#000000"
-    android:shadowDx="1"
-    android:shadowDy="1"
-    android:shadowRadius="2"
     android:fontFamily="sans-serif-medium"
-    android:drawableStart="@drawable/baseline_arrow_right_24"
-    android:background="@drawable/spinner_dropdown_background2" />
+    android:drawableStart="@drawable/spinner_starts"
+    android:background="@drawable/spinner_dropdown_background2"/>
 

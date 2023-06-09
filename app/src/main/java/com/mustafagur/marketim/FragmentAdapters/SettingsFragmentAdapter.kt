@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.mustafagur.marketim.R
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -52,6 +53,36 @@ class SettingsFragmentAdapter : Fragment(), AdapterView.OnItemSelectedListener {
 
         databaseHelper = DatabaseHelper(requireContext())
         fetchDataFromDatabase()
+
+        val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayoutSettings)
+        swipeRefreshLayout.setColorSchemeResources(R.color.pink)
+        swipeRefreshLayout.setOnRefreshListener {
+            val selectedItem = spinnerListeleme.selectedItem as? String
+            val textView = spinnerListeleme.selectedView as? TextView
+            textView?.setTextColor(Color.BLACK)
+
+            when (selectedItem) {
+                "Son 30 Günün Harcamaları" -> filterDataByLast30Days()
+                "Tüm Harcamaları Göster" -> fetchDataFromDatabase()
+                "Ocak Ayı Harcamaları" -> filterDataByMonth(Calendar.JANUARY)
+                "Şubat Ayı Harcamaları" -> filterDataByMonth(Calendar.FEBRUARY)
+                "Mart Ayı Harcamaları" -> filterDataByMonth(Calendar.MARCH)
+                "Nisan Ayı Harcamaları" -> filterDataByMonth(Calendar.APRIL)
+                "Mayıs Ayı Harcamaları" -> filterDataByMonth(Calendar.MAY)
+                "Haziran Ayı Harcamaları" -> filterDataByMonth(Calendar.JUNE)
+                "Temmuz Ayı Harcamaları" -> filterDataByMonth(Calendar.JULY)
+                "Ağustos Ayı Harcamaları" -> filterDataByMonth(Calendar.AUGUST)
+                "Eylül Ayı Harcamaları" -> filterDataByMonth(Calendar.SEPTEMBER)
+                "Ekim Ayı Harcamaları" -> filterDataByMonth(Calendar.OCTOBER)
+                "Kasım Ayı Harcamaları" -> filterDataByMonth(Calendar.NOVEMBER)
+                "Aralık Ayı Harcamaları" -> filterDataByMonth(Calendar.DECEMBER)
+                "En Yüksek Fiyata Göre Sırala" -> applyFilters()
+                "En Düşük Fiyata Göre Sırala" -> applyFilters()
+                "En Yakın Tarihe Göre Sırala" -> applyFilters()
+                "En Geç Tarihe Göre Sırala" -> applyFilters()
+            }
+            swipeRefreshLayout.isRefreshing = false
+        }
 
         return view
     }

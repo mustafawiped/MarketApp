@@ -2,6 +2,7 @@ package com.mustafagur.marketim.FragmentAdapters
 
 import DatabaseHelper
 import android.annotation.SuppressLint
+import android.content.Context
 import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import com.mustafagur.marketim.NotificationsClass
 import com.mustafagur.marketim.R
 import com.mustafagur.marketim.SktAdapterClass
 import java.text.SimpleDateFormat
@@ -23,6 +24,7 @@ class MainFragmentAdapter : Fragment() {
     private lateinit var list: ArrayList<DataClass2>
     private lateinit var listView: ListView
     private lateinit var gunlukBilgi: TextView
+    private lateinit var layoutum: ConstraintLayout
 
     @SuppressLint("MissingInflatedId", "Range")
     override fun onCreateView(
@@ -45,11 +47,31 @@ class MainFragmentAdapter : Fragment() {
         list = ArrayList<DataClass2>()
         dbHelper = DatabaseHelper(requireContext())
         sktyaklasanlar()
+        layoutum = view.findViewById(R.id.bildirimlerLayout)
         gunlukBilgi = view.findViewById(R.id.infoLbl)
-        GunlukBilgi()
+        val sharedPreferences = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val control5 = sharedPreferences.getBoolean("gunlukbilgi", true)
+        if (control5) {
+            layoutum.visibility = View.VISIBLE
+            GunlukBilgi()
+        } else {
+            layoutum.visibility = View.GONE
+            val sktLayout = view.findViewById<ConstraintLayout>(R.id.sktLayout)
+            val layoutParams = sktLayout.layoutParams
+            val params = listView.layoutParams
+            val density = resources.displayMetrics.density
+            params.height = (505 * density + 0.5f).toInt()
+            listView.layoutParams = params
+            layoutParams.height = dpToPx(590)
+            sktLayout.layoutParams = layoutParams
+            sktLayout.requestLayout()
+        }
         return view
     }
-
+    fun dpToPx(dp: Int): Int {
+        val density = resources.displayMetrics.density
+        return (dp * density + 0.5f).toInt()
+    }
     @SuppressLint("Range")
     private fun sktyaklasanlar() {
         val mevcutTRH = Calendar.getInstance().time
@@ -86,6 +108,7 @@ class MainFragmentAdapter : Fragment() {
             listView.adapter = adapterclass
         }
     }
+
     fun GunlukBilgi() {
         val bilgiListesi = ArrayList<String>()
         bilgiListesi.add("Dünyanın en yüksek noktası, Everest Dağı'dır.")
@@ -240,7 +263,6 @@ class MainFragmentAdapter : Fragment() {
         val index = random.nextInt(bilgiListesi.size)
         val secilenBilgi = bilgiListesi[index]
         gunlukBilgi.setText(secilenBilgi)
-
     }
 }
 

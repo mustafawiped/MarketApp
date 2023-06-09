@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pink"
+    android:id="@+id/fragment_main"
     tools:context="com.mustafagur.marketim.FragmentAdapters.MainFragmentAdapter">
 
     <TextView
@@ -64,16 +65,20 @@
 
             <TextView
                 android:id="@+id/infoLbl"
-                android:layout_width="357dp"
+                android:layout_width="match_parent"
                 android:layout_height="47dp"
-                android:textSize="15dp"
-                android:layout_marginRight="10px"
-                android:text="Günlük bilgi mesajı burada yazacaktır."
-                android:textColor="@color/gray" />
+                android:layout_marginRight="10dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:singleLine="false"
+                android:text="Günlük bilgi içeren yazı metni burada yazıyor. Marketim App Since 2023"
+                android:textColor="@color/gray"
+                android:textSize="15dp" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sktLayout"
         android:layout_width="match_parent"
         android:layout_height="480dp"
         android:layout_marginLeft="10dp"

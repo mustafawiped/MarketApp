@@ -7,38 +7,54 @@
     android:background="@color/pink"
     tools:context="com.mustafagur.marketim.FragmentAdapters.ItemsFragmentAdapter">
 
-    <ListView
-        android:id="@+id/ItemsList"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="513dp"
-        android:layout_marginLeft="10dp"
+        android:layout_height="533dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:padding="6dp"
         android:background="@drawable/layout_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchTxt"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints">
+
+        <ListView
+            android:id="@+id/ItemsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:background="@drawable/layout_background"
+            app:layout_constraintBottom_toTopOf="@+id/btnFragmentItems"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchTxt" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <Button
         android:id="@+id/btnFragmentItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="4dp"
         android:background="@drawable/button_background"
         android:text="Yeni Ürün Ekle"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/_dynamic"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/_dynamic"
-        app:layout_constraintTop_toBottomOf="@+id/ItemsList"
-        app:layout_constraintVertical_bias="0.4"
-        tools:ignore="OnClick,UnknownId,UsingOnClickInXml" />
+        app:layout_constraintEnd_toEndOf="@+id/swipeRefreshLayout"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/swipeRefreshLayout"
+        app:layout_constraintTop_toBottomOf="@+id/swipeRefreshLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/searchTxt"
@@ -50,15 +66,17 @@
         android:drawableStart="@drawable/search"
         android:ems="10"
         android:hint="Ara.."
-        android:textColor="@color/black"
         android:imeOptions="actionSearch"
         android:inputType="textPersonName"
         android:paddingLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/black"
         android:textColorHint="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.026" />
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

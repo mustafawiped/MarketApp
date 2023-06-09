@@ -1,22 +1,26 @@
 package com.mustafagur.marketim
 
 import DatabaseHelper
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.mustafagur.marketim.FragmentAdapters.DataClass2
-
+import com.mustafagur.marketim.FragmentAdapters.ItemsFragmentAdapter
+import com.mustafagur.marketim.FragmentAdapters.MainFragmentAdapter
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.reflect.typeOf
 class SktAdapterClass(private val list: ArrayList<DataClass2>, private val context: Context) : BaseAdapter() {
 
     override fun getCount(): Int {
@@ -28,6 +32,7 @@ class SktAdapterClass(private val list: ArrayList<DataClass2>, private val conte
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
+    @SuppressLint("Range")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = convertView
         if (view == null) {
@@ -38,7 +43,7 @@ class SktAdapterClass(private val list: ArrayList<DataClass2>, private val conte
         val itemadet: TextView = view.findViewById(R.id.design_itemcount)
         val itemskt: TextView = view.findViewById(R.id.design_itemskt)
         val itemimg: ImageView = view.findViewById(R.id.design_picture)
-        if (veri.urunFotografi != null) {
+        if (veri.urunFotografi != null ) {
             val bitmap = BitmapFactory.decodeByteArray(veri.urunFotografi, 0, veri.urunFotografi!!.size)
             itemimg.setImageBitmap(bitmap)
             itemimg.setBackgroundResource(R.drawable.image_background)
@@ -89,9 +94,13 @@ class SktAdapterClass(private val list: ArrayList<DataClass2>, private val conte
                 buttonOk.setOnClickListener {
                     val db = DatabaseHelper(context)
                     db.deleteData(veri.id)
+                    list.remove(veri)
+                    notifyDataSetChanged()
+                    val itemsfragment = ItemsFragmentAdapter()
+                    var new = db.getAllData()
+                    itemsfragment.updateList(new,context,false)
                     Toast.makeText(context,"Başarıyla ürün silindi.",Toast.LENGTH_SHORT).show()
-                    var intent = Intent(context,MainActivity::class.java)
-                    context.startActivity(intent)
+                    dialog.dismiss()
                 }
                 val buttonSilme: Button = dialogView.findViewById(R.id.button_silme)
                 buttonSilme.setOnClickListener {

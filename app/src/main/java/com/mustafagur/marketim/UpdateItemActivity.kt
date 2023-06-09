@@ -157,8 +157,13 @@ class UpdateItemActivity : AppCompatActivity() {
                     Toast.makeText(this, "Başarıyla $urunadi isimli ürün güncellendi.", Toast.LENGTH_LONG).show()
                 else
                     Toast.makeText(this, "Bir hata oluştu, lütfen Geliştirici Ekibine bildirin.", Toast.LENGTH_LONG).show()
+                finish()
+                
+                val main = MainActivity()
+                main.finish()
                 val go = Intent(this@UpdateItemActivity, MainActivity::class.java)
                 startActivity(go)
+                dialog.dismiss()
                 dbHelper.close()
             }
         }
@@ -177,7 +182,7 @@ class UpdateItemActivity : AppCompatActivity() {
         val month = currentDate.get(Calendar.MONTH)
         val day = currentDate.get(Calendar.DAY_OF_MONTH)
 
-        val datePickerDialog = DatePickerDialog(this, { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
+        val datePickerDialog = DatePickerDialog(this,R.style.CustomTimePickerDialog, { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
             val formattedDate = String.format("%02d/%02d/%04d", selectedDay, selectedMonth + 1, selectedYear)
             urunSKT.setText(formattedDate)
         }, year, month, day)

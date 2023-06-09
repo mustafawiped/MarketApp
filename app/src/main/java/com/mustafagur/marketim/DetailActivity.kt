@@ -94,8 +94,12 @@ class DetailActivity : AppCompatActivity() {
             db.deleteData(urunid)
             db.close()
             Toast.makeText(this,"Başarıyla Ürün Silindi!",Toast.LENGTH_LONG).show()
+            finish()
+            val main = MainActivity()
+            main.finish()
             val go = Intent(this@DetailActivity, MainActivity::class.java)
             startActivity(go)
+            dialog.dismiss()
         }
         buttonNo.setOnClickListener {
             dialog.dismiss()
