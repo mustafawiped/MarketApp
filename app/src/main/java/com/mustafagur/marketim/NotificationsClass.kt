@@ -34,7 +34,7 @@ class NotificationsClass : BroadcastReceiver() {
             if(control) {
                 val db = DatabaseHelper(context)
                 val cursor = db.getAllData()
-                var norifiId = 0
+                var norifiId = 1
                 cursor?.let {
                     val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                     val today = Calendar.getInstance()
@@ -44,10 +44,10 @@ class NotificationsClass : BroadcastReceiver() {
                         if (sonKtarihiDate != null) {
                             val remainingDays = kalanGunuHesapla(today, sonKtarihiDate)
                             if (remainingDays <= 5) {
+                                Log.e("TAG","bildirim id: $norifiId")
                                 val urunadi = cursor.getString(cursor.getColumnIndex("urunadi"))
                                 sendNotification(context,"$urunadi isimli ürünün son kullanma tarihinin geçmesine son $remainingDays Gün!","$urunadi 'in Günü Yaklaştı!", norifiId)
                                 norifiId++
-                                Log.e("TAG","bildirim id: $norifiId")
                             }
                         }
                     }
@@ -186,6 +186,6 @@ class NotificationsClass : BroadcastReceiver() {
             ) {
                 return
             }
-            notificationManager.notify(0, notificationBuilder.build())
+            notificationManager.notify(notificationId, notificationBuilder.build())
         }
     }
