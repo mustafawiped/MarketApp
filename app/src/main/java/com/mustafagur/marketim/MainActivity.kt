@@ -114,8 +114,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.contact_nd -> {
                     drawerLayout.closeDrawer(navigationView)
-                    val intent = Intent(this,AboutActivity::class.java)
-                    startActivity(intent)
+                    Toast.makeText(this,"Hakkımızda 'ya tıklandı.",Toast.LENGTH_SHORT).show()
                     true
                 }
                 else -> false
