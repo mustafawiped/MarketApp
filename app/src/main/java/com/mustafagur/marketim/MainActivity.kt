@@ -95,7 +95,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.backnotifi_nd -> {
                     drawerLayout.closeDrawer(navigationView)
-                    Toast.makeText(this,"Geri Bildirim 'e tıklandı.",Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this,FeedbackActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.premium_nd -> {

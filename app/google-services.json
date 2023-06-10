@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "943876728143",
+    "project_id": "marketimapp-462c9",
+    "storage_bucket": "marketimapp-462c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943876728143:android:dac68d5c4b45fc5b6b113a",
+        "android_client_info": {
+          "package_name": "com.mustafagur.marketim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943876728143-lqnk66d6ju4428onlscp0tatrs798oer.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mustafagur.marketim",
+            "certificate_hash": "e79bfdf4be814f94ec588fb1f1337f24dee7fcce"
+          }
+        },
+        {
+          "client_id": "943876728143-ostaobubtp463nqbjbasjfpddvaii10i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmAuS26ZVDcoMbr4pbbjmqPP-azECKA_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943876728143-ostaobubtp463nqbjbasjfpddvaii10i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
