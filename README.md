@@ -23,7 +23,7 @@ Katkıda bulunmak için lütfen `CONTRIBUTING.md` dosyasını inceleyin ve bir P
 
 ## Lisans
 
-Bu proje MIT Lisansı altında lisanslanmıştır. Daha fazla bilgi için `LICENSE` dosyasını inceleyebilirsiniz.
+Bu proje MIT Lisansı altında lisanslanmıştır. Daha fazla bilgi için `LICENSE.md` dosyasını inceleyebilirsiniz.
 
 ## İletişim
 
