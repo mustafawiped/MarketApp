@@ -1,30 +1,30 @@
-# EvimdekiMarket
+# HomeGrocery
 
-Bu mobil uygulama, kullanıcıların market alışverişlerinde satın aldıkları ürünleri kaydetmelerine ve son kullanma tarihlerini takip etmelerine yardımcı olur. Ayrıca aylık ve yıllık harcamaları da takip edebilme özelliği sunar.
+This mobile application helps users to keep track of the products they purchase during grocery shopping and monitor their expiration dates. It also provides the ability to track monthly and yearly expenses.
 
-## Özellikler
+## Features
 
-- Ürün kaydetme: Kullanıcılar, market alışverişlerinde satın aldıkları ürünlerin adını, fiyatını, adetini ve son kullanma tarihini uygulamaya kaydedebilir.
-- Bildirimler: Ürünün son kullanma tarihi yaklaştığında, kullanıcıya bildirim gönderilir. Böylece bozulmuş veya geçmiş tarihli ürünleri tüketmeden önce fark edebilir.
-- Kullanım süresi takibi: Kaydedilen ürünlerin son kullanma tarihine göre ne kadar süre kullanılabileceği bilgisini kullanıcıya gösterir.
-- Harcama takibi: Kullanıcılar, uygulama üzerinden yaptıkları alışverişlerin fiyatlarını kaydedebilir ve aylık/yıllık harcamalarını takip edebilir.
-- Özelleştirilebilir arayüz: Kullanıcılar, uygulama arayüzünü tercihlerine göre özelleştirebilir.
+- Product saving: Users can save the name, price, quantity, and expiration date of the products they purchased during grocery shopping.
+- Notifications: When the expiration date of a product approaches, the user receives a notification, allowing them to notice expired or spoiled products before consuming them.
+- Usage duration tracking: The app shows users how long they can use a product based on its expiration date.
+- Expense tracking: Users can record the prices of their purchases through the app and track their monthly/yearly expenses.
+- Customizable interface: Users can personalize the app interface according to their preferences.
 
-## Kurulum
+## Installation
 
-1. Bu projeyi klonlayın: `git clone https://github.com/mustafawiped/EvimdekiMarket.git`
-2. Proje dizinine gidin: `cd evimdekimarket`
-3. Gerekli bağımlılıkları yükleyin: `npm install`
-4. Uygulamayı çalıştırın: `npm start`
+1. Clone this project: `git clone https://github.com/mustafawiped/EvimdekiMarket.git`
+2. Go to the project directory: `cd evimdekimarket`
+3. Install the required dependencies: `npm install`
+4. Run the application: `npm start`
 
-## Katkıda Bulunma
+## Contribution
 
-Katkıda bulunmak için lütfen `CONTRIBUTING.md` dosyasını inceleyin ve bir Pull Talebi oluşturun. 
+To contribute, please refer to the `CONTRIBUTING.md` file and create a Pull Request.
 
-## Lisans
+## License
 
-Bu proje MIT Lisansı altında lisanslanmıştır. Daha fazla bilgi için `LICENSE.md` dosyasını inceleyebilirsiniz.
+This project is licensed under the MIT License. For more information, see the `LICENSE.md` file.
 
-## İletişim
+## Contact
 
-Eğer herhangi bir sorunuz veya öneriniz varsa, lütfen mustafawiped@gmail.com adresinden bana ulaşın.
+If you have any questions or suggestions, please contact me at mustafawiped@gmail.com.
