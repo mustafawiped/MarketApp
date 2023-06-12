@@ -1,20 +1,20 @@
-# Geliştirme Klavuzu
+# Development Guide
 
-Bu projeyi sizde geliştirmek istiyorsanız size verebileceğim bazı adımlar ve kurallar aşağıda açıklanmıştır.
+If you want to contribute to this project, below are the steps and guidelines I can provide.
 
-## Adımlar
+## Steps
 
-1. Projeyi fork edin.
-2. Değişikliklerinizi yapacağınız yeni bir branch oluşturun.
-3. Yaptığınız değişiklikleri commit edin ve açıklayıcı bir şekilde açıklayıcı bir commit mesajı ekleyin.
-4. Yeni branch'inizi forkladığınız orijinal projeye gönderin.
-5. Bir Pull Talebi (Pull Request) oluşturun ve değişikliklerinizi açıklayın.
+1. Fork the project.
+2. Create a new branch where you will make your changes.
+3. Commit your changes and provide a descriptive commit message.
+4. Push your new branch to the original project you forked.
+5. Create a Pull Request and explain your changes.
 
-## Kurallar
+## Guidelines
 
-- Standart kodlama kurallarına uyun.
-- Lisans kurallarına uygun şekilde çalışmalarınızı lisanslayın.
+- Follow the standard coding conventions.
+- License your work according to the license rules.
 
-## Yardım
+## Help
 
-Herhangi bir sorunuz veya öneriniz varsa, lütfen mustafawiped@gmail.com adresinden bana ulaşın.
+If you have any questions or suggestions, please contact me at mustafawiped@gmail.com.
