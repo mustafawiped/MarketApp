@@ -111,6 +111,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     fun urunuGuncelle(view: View) {
+        finish()
         val intent = Intent(this, UpdateItemActivity::class.java)
         intent.putExtra("urunid", urunid)
         intent.putExtra("urunadi", urunadi)

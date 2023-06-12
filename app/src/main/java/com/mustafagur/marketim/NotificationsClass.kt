@@ -28,68 +28,36 @@ class NotificationsClass : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             scheduleNotification(context)
-        } else if (intent.action == "com.mustafagur.marketim.SEND_NOTIFICATION") {
-            val sharedPreferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-            val control = sharedPreferences.getBoolean("tumurunlerbildirim", false)
-            if(control) {
-                val db = DatabaseHelper(context)
-                val cursor = db.getAllData()
-                var norifiId = 1
-                cursor?.let {
-                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                    val today = Calendar.getInstance()
-                    while (cursor.moveToNext()) {
-                        val sonKtarihi = cursor.getString(cursor.getColumnIndex("urunskt"))
-                        val sonKtarihiDate = dateFormat.parse(sonKtarihi)
-                        if (sonKtarihiDate != null) {
-                            val remainingDays = kalanGunuHesapla(today, sonKtarihiDate)
-                            if (remainingDays <= 5) {
-                                Log.e("TAG","bildirim id: $norifiId")
-                                val urunid = cursor.getInt(cursor.getColumnIndex("id"))
-                                val urunadi = cursor.getString(cursor.getColumnIndex("urunadi"))
-                                val urunimg = cursor.getBlob(cursor.getColumnIndex("urunfotografi"))
-                                val urunskt = cursor.getString(cursor.getColumnIndex("urunskt"))
-                                val urunfiyati = cursor.getString(cursor.getColumnIndex("urunfiyati"))
-                                val urunaded = cursor.getInt(cursor.getColumnIndex("urunadedi"))
-                                val intent = Intent(context, DetailActivity::class.java)
-                                intent.putExtra("urunid", urunid)
-                                intent.putExtra("urunadi", urunadi)
-                                intent.putExtra("urunfiyati", urunfiyati)
-                                intent.putExtra("urunadedi", urunaded)
-                                intent.putExtra("urunskt", urunskt)
-                                intent.putExtra("urunfotografi", urunimg)
-                                intent.putExtra("notifications",true)
-                                sendNotification(context,"$urunadi isimli ürünün son kullanma tarihinin geçmesine son $remainingDays Gün!","$urunadi 'in Günü Yaklaştı!", norifiId,intent)
-                                norifiId++
-                            }
-                        }
-                    }
-                }
-            } else {
-                val db = DatabaseHelper(context)
-                val cursor = db.getAllData()
-                var sayac = 0
-                cursor?.let {
-                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                    val today = Calendar.getInstance()
-                    while (cursor.moveToNext()) {
-                        val sonKtarihi = cursor.getString(cursor.getColumnIndex("urunskt"))
-                        val sonKtarihiDate = dateFormat.parse(sonKtarihi)
-                        if (sonKtarihiDate != null) {
-                            val remainingDays = kalanGunuHesapla(today, sonKtarihiDate)
-                            if (remainingDays <= 5) {
-                                sayac++
-                            }
-                        }
-                    }
-                }
-                if (sayac != 0) {
-                    val intent = Intent(context,MainActivity::class.java)
-                    sendNotification(context, "$sayac tane ürünün son kullanma tarihi 5 günden az kaldı! Detay için tıkla!", "Zamanımız Tükeniyor!!", 0,intent)
-                }
+        } else if (intent.action == "android.intent.action.MY_PACKAGE_REPLACED" ||
+            intent.action == "com.mustafagur.marketim.SEND_NOTIFICATION"
+        ) {
+            val currentTime = Calendar.getInstance()
+            val targetTime = Calendar.getInstance()
+            targetTime.set(Calendar.HOUR_OF_DAY, 21)
+            targetTime.set(Calendar.MINUTE, 30)
+            targetTime.set(Calendar.SECOND, 0)
+            targetTime.set(Calendar.MILLISECOND, 0)
+            if (currentTime.timeInMillis >= targetTime.timeInMillis) {
+                targetTime.add(Calendar.DAY_OF_MONTH, 1)
             }
+            val alarmIntent = Intent(context, NotificationsClass::class.java)
+            alarmIntent.action = "com.mustafagur.marketim.SEND_NOTIFICATION"
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                1,
+                alarmIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.setExact(
+                AlarmManager.RTC_WAKEUP,
+                targetTime.timeInMillis,
+                pendingIntent
+            )
+            scheduleNotification(context)
         }
     }
+
 
     fun kalanGunuHesapla(startDate: Calendar, endDate: Date): Int {
         val baslangic = startDate.clone() as Calendar
@@ -104,6 +72,7 @@ class NotificationsClass : BroadcastReceiver() {
         return (diff / milisaniye).toInt()
     }
 
+    @SuppressLint("Range")
     public fun scheduleNotification(context: Context) {
         val intent = Intent(context, NotificationsClass::class.java)
         intent.action = "com.mustafagur.marketim.SEND_NOTIFICATION"
@@ -121,23 +90,24 @@ class NotificationsClass : BroadcastReceiver() {
         createNotificationChannel(context)
         val sharedPreferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val durum = sharedPreferences.getBoolean("gunlukbildirimdurum", false)
-        if(durum) {
-            val alarm = sharedPreferences.getString("gunlukbildirimsaat","")
-            if (alarm.equals("") || alarm == null) {
-                now.set(Calendar.HOUR_OF_DAY, 23)
-                now.set(Calendar.MINUTE, 30)
-                now.set(Calendar.SECOND, 0)
-            } else {
-                var split = alarm.split(":")
+        if (durum) {
+            val alarm = sharedPreferences.getString("gunlukbildirimsaat", "21:30")
+            val split = alarm?.split(":")
+            if (split?.size == 2) {
                 now.set(Calendar.HOUR_OF_DAY, split[0].toInt())
                 now.set(Calendar.MINUTE, split[1].toInt())
                 now.set(Calendar.SECOND, 0)
+            } else {
+                now.set(Calendar.HOUR_OF_DAY, 21)
+                now.set(Calendar.MINUTE, 30)
+                now.set(Calendar.SECOND, 0)
             }
         } else {
-            now.set(Calendar.HOUR_OF_DAY, 23)
+            now.set(Calendar.HOUR_OF_DAY, 21)
             now.set(Calendar.MINUTE, 30)
             now.set(Calendar.SECOND, 0)
         }
+
         val alarmIntent = Intent(context, NotificationsClass::class.java)
         alarmIntent.action = "com.mustafagur.marketim.SEND_NOTIFICATION"
         val notificationPendingIntent = PendingIntent.getBroadcast(
@@ -152,6 +122,8 @@ class NotificationsClass : BroadcastReceiver() {
             AlarmManager.INTERVAL_DAY,
             notificationPendingIntent
         )
+
+        // Bildirim gönderme işlemlerini buraya ekleyin
     }
 
     private fun createNotificationChannel(context: Context) {

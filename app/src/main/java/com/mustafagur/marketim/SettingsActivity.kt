@@ -271,8 +271,6 @@ class SettingsActivity : AppCompatActivity() {
                         editor.putString("gunlukbildirimsaat",edittext.text.toString())
                         editor.apply()
                         GunlukBildirimSaatSw.isChecked = true
-                        val notifications = NotificationsClass()
-                        notifications.scheduleNotification(this)
                         val textv = findViewById<TextView>(R.id.GunlukBildirimSaatTv2)
                         textv.text = "Bildirimler her gün saat ${edittext.text} 'da atılıyor. Eğer kapatırsan 21:30 'da atılacak."
                         Toast.makeText(this, "Ayar başarıyla açıldı!", Toast.LENGTH_SHORT).show()
@@ -304,8 +302,6 @@ class SettingsActivity : AppCompatActivity() {
                     editor.putBoolean("gunlukbildirimdurum", false)
                     editor.apply()
                     GunlukBildirimSaatSw.isChecked = false
-                    val notifications = NotificationsClass()
-                    notifications.scheduleNotification(this)
                     val textv = findViewById<TextView>(R.id.GunlukBildirimSaatTv2)
                     textv.text = "Ayar açıksa, belirlediğiniz saatte her gün bildirim gönderir. Ayar kapalıysa her gün 21:30 'da gönderir."
                     Toast.makeText(this, "Ayar başarıyla kapatıldı!", Toast.LENGTH_SHORT).show()

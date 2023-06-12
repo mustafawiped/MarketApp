@@ -34,17 +34,16 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="false" />
-
         <receiver
             android:name=".NotificationsClass"
             android:enabled="true"
             android:exported="true"
-            android:label="Notifications Class">
+            android:label="MarketimBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.mustafagur.marketim.SEND_NOTIFICATION" />
             </intent-filter>
         </receiver>
-
         <activity
             android:name=".UpdateItemActivity"
             android:exported="false" />

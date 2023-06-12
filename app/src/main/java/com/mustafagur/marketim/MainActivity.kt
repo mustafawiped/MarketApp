@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var notificationsReceiver: NotificationsClass
 
     override fun onStart() {
         super.onStart()
@@ -125,13 +126,14 @@ class MainActivity : AppCompatActivity() {
         detaylart.setOnClickListener {
             drawerLayout.openDrawer(navigationView)
         }
-
-        val notifications = NotificationsClass()
-        notifications.scheduleNotification(this)
+        notificationsReceiver = NotificationsClass()
+        val intentFilter = IntentFilter("com.mustafagur.marketim.SEND_NOTIFICATION")
+        registerReceiver(notificationsReceiver, intentFilter)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        unregisterReceiver(notificationsReceiver)
         dbHelper.close()
     }
 

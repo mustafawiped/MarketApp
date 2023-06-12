@@ -266,7 +266,7 @@
         <TextView
             android:id="@+id/YiliGecmisVeriSilTv2"
             android:layout_width="325dp"
-            android:layout_height="47dp"
+            android:layout_height="wrap_content"
             android:text="Ayar açıksa, önceki yıl kaydedilen ve son kullanma tarihi geçmiş tüm ürünleri otomatik siler."
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
