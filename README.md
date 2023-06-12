@@ -1,4 +1,4 @@
-# HomeGrocery
+# MarketApp
 
 This mobile application helps users to keep track of the products they purchase during grocery shopping and monitor their expiration dates. It also provides the ability to track monthly and yearly expenses.
 
