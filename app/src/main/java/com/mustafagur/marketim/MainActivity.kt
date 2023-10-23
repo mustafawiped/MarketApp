@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         for (fragment in fragmentList) {
             if (fragment is ItemsFragmentAdapter) {
                 fragment.updateList(cursor,this,true)
-                return
+                return;
             }
         }
     }
